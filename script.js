@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Load projects
     loadProjects();
+    loadTools();
 });
 
 // Load projects from embedded data
@@ -103,7 +104,117 @@ function displayProjects(projects) {
         `;
     }).join('');
 
-    projectsGrid.innerHTML = projectsHTML;
+    const projectsTrack = document.createElement('div');
+    projectsTrack.className = 'projects-track';
+    const clones = 3;
+    projectsTrack.innerHTML = Array.from({ length: clones }, () => projectsHTML).join('');
+
+    projectsGrid.innerHTML = '';
+    projectsGrid.appendChild(projectsTrack);
+
+    const projectCards = projectsTrack.querySelectorAll('.project-card');
+    projectCards.forEach((card, index) => {
+        if (index >= projects.length) {
+            card.setAttribute('aria-hidden', 'true');
+            const link = card.querySelector('.project-link');
+            if (link) {
+                link.setAttribute('tabindex', '-1');
+            }
+        }
+    });
+
+    if (typeof projectsGrid.__marqueeCleanup === 'function') {
+        projectsGrid.__marqueeCleanup();
+    }
+
+    requestAnimationFrame(() => {
+        projectsGrid.__marqueeCleanup = startMarquee(projectsGrid, projectsTrack, { clones, speed: 0.2 });
+    });
+}
+
+// Load tools from embedded data
+function loadTools() {
+    const toolsGrid = document.getElementById('tools-grid');
+    if (!toolsGrid) {
+        return;
+    }
+
+    const defaultTools = [
+        { name: 'Flutter', image: 'assets/tools/flutter.png' },
+        { name: 'Dart', image: 'assets/tools/dart.png' },
+        { name: 'Swift', image: 'assets/tools/swift.png' },
+        { name: 'Kotlin', image: 'assets/tools/kotlin.png' },
+        { name: 'Android', image: 'assets/tools/android.png' },
+        { name: 'iOS', image: 'assets/tools/ios.png' },
+        { name: 'Xcode', image: 'assets/tools/xcode.png' },
+        { name: 'Python', image: 'assets/tools/python.png' },
+        { name: 'Firebase', image: 'assets/tools/firebase.png' },
+        { name: 'Supabase', image: 'assets/tools/supabase.png' },
+        { name: 'Next.js', image: 'assets/tools/next.png' },
+        { name: 'React', image: 'assets/tools/react.png' },
+        { name: 'TypeScript', image: 'assets/tools/typescript.png' },
+        { name: 'Node.js', image: 'assets/tools/node.png' },
+        { name: 'Figma', image: 'assets/tools/figma.png' },
+        { name: 'GitHub', image: 'assets/tools/github.png' },
+        { name: 'Docker', image: 'assets/tools/docker.png' },
+        { name: 'Postman', image: 'assets/tools/postman.png' }
+    ];
+
+    const tools = typeof TOOLS_DATA !== 'undefined' ? TOOLS_DATA : defaultTools;
+
+    const toolsHTML = tools.map((tool, index) => {
+        const imagePath = tool.image || '';
+        const name = tool.name || 'Tool';
+        const loadingAttr = index === 0 ? 'eager' : 'lazy';
+        return `
+            <div class="tool-card" data-tool="${name}">
+                <img src="${imagePath}" alt="${name}" class="tool-image" loading="${loadingAttr}" />
+                <span class="tool-label">${name}</span>
+            </div>
+        `;
+    }).join('');
+
+    const toolsTrack = document.createElement('div');
+    toolsTrack.className = 'tools-track';
+    const clones = 3;
+    toolsTrack.innerHTML = Array.from({ length: clones }, () => toolsHTML).join('');
+
+    toolsGrid.innerHTML = '';
+    toolsGrid.appendChild(toolsTrack);
+
+    const toolCards = toolsTrack.querySelectorAll('.tool-card');
+    toolCards.forEach((card, index) => {
+        if (index >= tools.length) {
+            card.setAttribute('aria-hidden', 'true');
+        }
+    });
+
+    const images = Array.from(toolsTrack.querySelectorAll('img')).slice(0, tools.length);
+    const startMarqueeForTools = () => {
+        if (typeof toolsGrid.__marqueeCleanup === 'function') {
+            toolsGrid.__marqueeCleanup();
+        }
+        requestAnimationFrame(() => {
+            toolsGrid.__marqueeCleanup = startMarquee(toolsGrid, toolsTrack, { clones, speed: 0.4 });
+        });
+    };
+
+    if (images.length === 0) {
+        startMarqueeForTools();
+    } else {
+        const imagePromises = images.map(img => {
+            if (img.complete && img.naturalWidth !== 0) {
+                return Promise.resolve();
+            }
+            return new Promise(resolve => {
+                img.addEventListener('load', resolve, { once: true });
+                img.addEventListener('error', resolve, { once: true });
+            });
+        });
+
+        Promise.all(imagePromises).then(startMarqueeForTools);
+        setTimeout(startMarqueeForTools, 1000);
+    }
 }
 
 // HTMX functionality for dynamic content loading
@@ -121,4 +232,64 @@ function addHtmxAttributes() {
         link.setAttribute('hx-target', '#main-content');
         link.setAttribute('hx-push-url', 'true');
     });
-} 
+}
+
+function startMarquee(container, track, options = {}) {
+    const { clones = 2, speed = 0.6 } = options;
+    let offset = 0;
+    let rafId = null;
+    let paused = false;
+    let segmentWidth = Math.max(track.scrollWidth / clones, 1);
+
+    const updateSegmentWidth = () => {
+        const width = track.scrollWidth / clones;
+        segmentWidth = Math.max(width, 1);
+    };
+
+    const step = () => {
+        if (!paused) {
+            offset += speed;
+            if (offset >= segmentWidth) {
+                offset -= segmentWidth;
+            }
+            track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        }
+        rafId = requestAnimationFrame(step);
+    };
+
+    const pause = () => {
+        paused = true;
+    };
+
+    const resume = () => {
+        paused = false;
+    };
+
+    const handleResize = () => {
+        const previousSegment = segmentWidth;
+        updateSegmentWidth();
+        if (segmentWidth !== previousSegment) {
+            offset = offset % segmentWidth;
+        }
+    };
+
+    container.addEventListener('mouseenter', pause);
+    container.addEventListener('mouseleave', resume);
+    container.addEventListener('focusin', pause);
+    container.addEventListener('focusout', resume);
+    window.addEventListener('resize', handleResize);
+
+    updateSegmentWidth();
+    step();
+
+    return () => {
+        if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+        }
+        container.removeEventListener('mouseenter', pause);
+        container.removeEventListener('mouseleave', resume);
+        container.removeEventListener('focusin', pause);
+        container.removeEventListener('focusout', resume);
+        window.removeEventListener('resize', handleResize);
+    };
+}
