@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Hartvig Solutions - Flutter App Development & Custom Software</title>
+    <meta name="title" content="Hartvig Solutions - Flutter App Development & Custom Software">
+    <meta name="description"
+        content="Professional Flutter app development for startups and small businesses. Fast MVP development, custom software, and website solutions. Based in Denmark, serving clients worldwide.">
+    <meta name="keywords"
+        content="flutter app development, mobile app development, MVP development, custom software, startup apps, Denmark app development, cross-platform apps, native apps">
+    <meta name="author" content="Hartvig Solutions">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="DK">
+    <meta name="geo.placename" content="Smørum, Denmark">
+    <meta name="geo.position" content="55.7558;12.6068">
+    <meta name="ICBM" content="55.7558, 12.6068">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://hartvigsolutions.com">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hartvigsolutions.com">
+    <meta property="og:title" content="Hartvig Solutions - Flutter App Development & Custom Software">
+    <meta property="og:description"
+        content="Professional Flutter app development for startups and small businesses. Fast MVP development, custom software, and website solutions. Based in Denmark, serving clients worldwide.">
+    <meta property="og:image" content="https://hartvigsolutions.com/web-app-manifest-512x512.png">
+    <meta property="og:site_name" content="Hartvig Solutions">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://hartvigsolutions.com">
+    <meta property="twitter:title" content="Hartvig Solutions - Flutter App Development & Custom Software">
+    <meta property="twitter:description"
+        content="Professional Flutter app development for startups and small businesses. Fast MVP development, custom software, and website solutions.">
+    <meta property="twitter:image" content="https://hartvigsolutions.com/web-app-manifest-512x512.png">
+
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#1A2E49">
+    <meta name="msapplication-TileColor" content="#1A2E49">
+    <meta name="application-name" content="Hartvig Solutions">
+    <meta name="apple-mobile-web-app-title" content="Hartvig Solutions">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Hartvig Solutions",
+        "description": "Professional Flutter app development for startups and small businesses. Fast MVP development, custom software, and website solutions.",
+        "url": "https://hartvigsolutions.com",
+        "applicationCategory": "MobileApplication",
+        "operatingSystem": "Android, iOS",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "DKK"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Hartvig Solutions",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Smørum",
+                "addressRegion": "Sjælland",
+                "addressCountry": "DK"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "contact@hartvigsolutions.com",
+                "availableLanguage": "English"
+            }
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "Hartvig Solutions",
+            "url": "https://hartvigsolutions.com"
+        }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="site.webmanifest">
+
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="web-app-manifest-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="web-app-manifest-512x512.png">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="project-styles.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <img src="Logo.png" alt="Hartvig Solutions Logo" class="logo-image">
+                    <h1>Hartvig Solutions</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Flutter App Development & Custom Software</h1>
+                    <p class="hero-description">
+                        Professional Flutter app development for startups and small businesses. We specialize in fast
+                        MVP development,
+                        helping you get your app to market quickly. Based in Denmark, serving clients worldwide with
+                        custom software
+                        and website solutions.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                <div id="projects-grid" class="projects-grid">
+                    <!-- Projects will be loaded here via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-content">
+                    <p>Ready to turn your ideas into digital solutions? Let's talk!</p>
+                    <div class="contact-links">
+                        <a href="mailto:contact@hartvigsolutions.com" class="contact-link">
+                            Get in Touch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Hartvig Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Projects data - embedded directly to avoid server issues
+        const PROJECTS_DATA = [
+            {
+                "name": "jsontomodel",
+                "description": "Use our free JSON to Model converter to instantly generate type-safe data models in popular languages like Swift, Kotlin, Dart, TypeScript, Python, Rust, and more. Whether you're building mobile or backend apps, this code generator will save you time and ensure consistency.",
+                "shortDescription": "Free JSON to Model converter for multiple languages"
+            },
+            {
+                "name": "flags-game",
+                "description": "An engaging educational game that helps you learn world flags through interactive gameplay and quizzes.",
+                "shortDescription": "Educational flag learning game"
+            },
+            {
+                "name": "hint-master",
+                "description": "It's a simple but fun and challenging game that can be played by people of all ages and can be a fun activity with friends and family or a challenging competition with a group of colleagues or classmates.",
+                "shortDescription": "Fun group game for all ages"
+            },
+            {
+                "name": "util-master",
+                "description": "Learn CS2 lineups for smokes, flashes, and molotovs on all Counter-Strike maps. Master the art of utility usage with precise positioning and timing guides to improve your tactical gameplay.",
+                "shortDescription": "CS2 utility lineup trainer"
+            }
+        ];
+
+        // URL Router for clean URLs
+        class URLRouter {
+            constructor() {
+                this.routes = {
+                    '': this.showHome,
+                    'flags-game': this.showProject,
+                    'hint-master': this.showProject,
+                    'util-master': this.showProject,
+                    'jsontomodel': this.showProject
+                };
+
+                this.init();
+            }
+
+            init() {
+                // Handle browser back/forward buttons
+                window.addEventListener('popstate', () => {
+                    this.handleRoute();
+                });
+
+                // Handle clicks on project links
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('project-link')) {
+                        e.preventDefault();
+                        const href = e.target.getAttribute('href');
+                        console.log('Project link clicked, href:', href);
+
+                        // Extract project name from href
+                        let projectName;
+                        if (href.startsWith('#')) {
+                            projectName = href.substring(1); // Remove leading #
+                        } else if (href.startsWith('/')) {
+                            projectName = href.substring(1); // Remove leading /
+                        } else {
+                            projectName = href; // No prefix
+                        }
+
+                        console.log('Extracted project name:', projectName);
+                        this.navigateToProject(projectName);
+                    }
+                });
+
+                // Handle initial route
+                this.handleRoute();
+            }
+
+            navigateToProject(projectName) {
+                // Always use hash-based routing for consistency
+                console.log('Navigating to project:', projectName);
+                window.history.pushState({}, '', `#${projectName}`);
+                this.showProject(projectName);
+            }
+
+            navigateToHome() {
+                // Update URL without page reload
+                if (window.location.hash) {
+                    // Hash-based routing (local development)
+                    window.history.pushState({}, '', '');
+                } else {
+                    // Path-based routing (production)
+                    window.history.pushState({}, '', '/');
+                }
+                this.showHome();
+            }
+
+            handleRoute() {
+                let path = '';
+
+                // Check if we're using hash-based routing (local development) or path-based routing (production)
+                if (window.location.hash) {
+                    // Hash-based routing (local development)
+                    path = window.location.hash.substring(1); // Remove leading #
+                } else {
+                    // Path-based routing (production)
+                    path = window.location.pathname.substring(1); // Remove leading slash
+                }
+
+                // Remove any file extensions
+                path = path.replace('.html', '');
+
+                // Debug logging (commented out to reduce console spam)
+                // console.log('=== ROUTER DEBUG ===');
+                // console.log('Original URL:', window.location.href);
+                // console.log('Hash:', window.location.hash);
+                // console.log('Pathname:', window.location.pathname);
+                // console.log('Processed path:', path);
+                // console.log('Available routes:', Object.keys(this.routes));
+
+                // Check for download route (project-specific)
+                if (path.includes('/download')) {
+                    const projectName = path.split('/')[0];
+                    this.handleDownload(projectName);
+                    return;
+                }
+
+                // Check for app-ads.txt route (project-specific)
+                if (path.includes('/app-ads.txt')) {
+                    const projectName = path.split('/')[0];
+                    this.showAppAdsTxt(projectName);
+                    return;
+                }
+
+                // Check for privacy policy parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const showPrivacyPolicy = urlParams.get('privacypolicy') === 'true';
+
+                const route = this.routes[path];
+
+                if (route) {
+                    if (path && showPrivacyPolicy) {
+                        // If it's a project and privacy policy is requested, show project with privacy policy open
+                        this.showProject(path, showPrivacyPolicy);
+                    } else {
+                        route.call(this, path);
+                    }
+                } else {
+                    this.show404();
+                }
+            }
+
+            showHome() {
+                // Show header and footer on home page
+                document.querySelector('.header').style.display = 'block';
+                document.querySelector('.footer').style.display = 'block';
+
+                document.getElementById('main-content').innerHTML = `
+                    <!-- Hero Section -->
+                    <section id="home" class="hero">
+                        <div class="container">
+                            <div class="hero-content">
+                                <h1 class="hero-title">Apps. Websites. Software.</h1>
+                                <p class="hero-description">
+                                    Hartvig Solutions is a small, independent software studio creating functional and elegant digital
+                                    products.
+                                    I design and build mobile apps, websites, and custom tools that solve real-world problems.
+                                    Explore my recent projects or get in touch if you have something in mind.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Projects Section -->
+                    <section id="projects" class="projects">
+                        <div class="container">
+                            <h2 class="section-title">Projects</h2>
+                            <div id="projects-grid" class="projects-grid">
+                                <!-- Projects will be loaded here via JavaScript -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact Section -->
+                    <section id="contact" class="contact">
+                        <div class="container">
+                            <h2 class="section-title">Contact</h2>
+                            <div class="contact-content">
+                                <p>Ready to turn your ideas into digital solutions? Let's talk!</p>
+                                <div class="contact-links">
+                                    <a href="mailto:contact@hartvigsolutions.com" class="contact-link">
+                                        Get in Touch
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+
+                // Load projects
+                loadProjects();
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+
+            async showProject(projectName, showPrivacyPolicy = false) {
+                try {
+                    const response = await fetch(`/${projectName}/info.json`);
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to load project data: ${response.status} ${response.statusText}`);
+                    }
+
+                    const projectData = await response.json();
+                    this.displayProject(projectData, projectName, showPrivacyPolicy);
+                    await this.loadProjectImages(projectName, projectData.imageCount || 0);
+                } catch (error) {
+                    console.error('Error loading project data:', error);
+                    this.show404();
+                }
+            }
+
+            displayProject(data, projectName, showPrivacyPolicy = false) {
+                // Hide header on project pages
+                document.querySelector('.header').style.display = 'none';
+
+                document.getElementById('main-content').innerHTML = `
+                    <!-- Project Content -->
+                    <main class="project-main">
+                        <div class="container">
+                            <div class="project-header">
+                                <h1 class="project-title">${data.name}</h1>
+                                <p class="project-description">${data.description}</p>
+                            </div>
+
+                            <!-- Image Gallery -->
+                            <div class="project-gallery">
+                                <div class="gallery-container" id="gallery-container">
+                                    <!-- Images will be loaded here -->
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="project-actions">
+                                <div class="action-buttons">
+                                    ${this.createActionButtons(data)}
+                                </div>
+                            </div>
+
+                            <!-- Privacy Policy -->
+                            ${data.privacyPolicy ? `
+                                <div class="privacy-section" style="display: ${showPrivacyPolicy ? 'block' : 'none'};">
+                                    <h2>Privacy Policy</h2>
+                                    <div class="privacy-content" id="privacy-content">
+                                        <div class="loading-state">Loading privacy policy...</div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </main>
+                `;
+
+                // Update page title
+                document.title = `${data.name} - Hartvig Solutions`;
+
+                // Force CSS recalculation
+                document.body.offsetHeight;
+
+                // Load project images (already called from showProject with imageCount)
+
+                // Load privacy policy if needed
+                if (data.privacyPolicy) {
+                    this.loadPrivacyPolicy(data.privacyPolicy, showPrivacyPolicy);
+                }
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+
+            createActionButtons(data) {
+                const buttons = [];
+
+                if (data.appStore) {
+                    buttons.push(`<a href="${data.appStore}" target="_blank" class="action-button">Get on App Store</a>`);
+                }
+
+                if (data.googlePlay) {
+                    buttons.push(`<a href="${data.googlePlay}" target="_blank" class="action-button">Get on Google Play</a>`);
+                }
+
+                if (data.website) {
+                    buttons.push(`<a href="${data.website}" target="_blank" class="action-button secondary">Visit Website</a>`);
+                }
+
+                if (data.privacyPolicy) {
+                    buttons.push(`<button onclick="togglePrivacyPolicy()" class="action-button outline">Privacy Policy</button>`);
+                }
+
+                if (buttons.length > 0) {
+                    return buttons.join('');
+                } else {
+                    return `<div style="text-align: center; color: #666;"><p>No download links available at the moment.</p></div>`;
+                }
+            }
+
+            convertMarkdownToHtml(markdown) {
+                return markdown
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>')
+                    .replace(/\n/gim, '<br>');
+            }
+
+            async loadProjectImages(projectName, imageCount = 0) {
+                const galleryContainer = document.getElementById('gallery-container');
+
+                // Common image extensions (PNG first since that's what we have)
+                const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
+                let loadedImages = [];
+
+                // If imageCount is specified (even if 0), only try image1 to image{imageCount}
+                if (imageCount !== undefined && imageCount !== null) {
+                    for (let i = 1; i <= imageCount; i++) {
+                        for (let ext of imageExtensions) {
+                            // Use absolute path to ensure images load correctly
+                            const imageUrl = `/${projectName}/images/image${i}.${ext}`;
+                            try {
+                                const response = await fetch(imageUrl, { method: 'HEAD' });
+                                if (response.ok) {
+                                    loadedImages.push(imageUrl);
+                                    break; // Found this image, try next number
+                                }
+                            } catch (error) {
+                                // Continue to next extension
+                            }
+                        }
+                    }
+                } else {
+                    // Fallback: try to load images with common names and numbers
+                    const commonNames = ['screenshot', 'image', 'photo', 'pic', 'img', 'app', 'demo', 'preview'];
+                    const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+                    // Try combinations of names + numbers
+                    for (let name of commonNames) {
+                        for (let num of numbers) {
+                            for (let ext of imageExtensions) {
+                                const imageUrl = `/${projectName}/images/${name}${num}.${ext}`;
+                                try {
+                                    const response = await fetch(imageUrl, { method: 'HEAD' });
+                                    if (response.ok) {
+                                        loadedImages.push(imageUrl);
+                                        break; // Found this image, try next name+number
+                                    }
+                                } catch (error) {
+                                    // Continue to next extension
+                                }
+                            }
+                        }
+                    }
+
+                    // Also try just the name without numbers
+                    for (let name of commonNames) {
+                        for (let ext of imageExtensions) {
+                            const imageUrl = `/${projectName}/images/${name}.${ext}`;
+                            try {
+                                const response = await fetch(imageUrl, { method: 'HEAD' });
+                                if (response.ok) {
+                                    console.log('Found image:', imageUrl);
+                                    loadedImages.push(imageUrl);
+                                    break; // Found this image, try next name
+                                }
+                            } catch (error) {
+                                // Continue to next extension
+                            }
+                        }
+                    }
+                }
+
+                if (loadedImages.length > 0) {
+                    // Create gallery HTML with navigation and indicators
+                    const imageHTML = loadedImages.map(imageUrl => `
+                        <div class="gallery-item">
+                            <img src="${imageUrl}" alt="Project Screenshot" loading="lazy">
+                        </div>
+                    `).join('');
+
+                    const navigationHTML = `
+                        <button class="gallery-nav prev" onclick="galleryPrev()" disabled>‹</button>
+                        <button class="gallery-nav next" onclick="galleryNext()">›</button>
+                    `;
+
+                    const indicatorsHTML = loadedImages.map((_, index) => `
+                        <div class="gallery-indicator ${index === 0 ? 'active' : ''}" onclick="galleryGoTo(${index})"></div>
+                    `).join('');
+
+                    const counterHTML = `<div class="gallery-counter">1 / ${loadedImages.length}</div>`;
+
+                    const fullGalleryHTML = `
+                        <div class="gallery-wrapper">
+                            ${imageHTML}
+                        </div>
+                        ${navigationHTML}
+                        <div class="gallery-indicators">
+                            ${indicatorsHTML}
+                        </div>
+                        ${counterHTML}
+                    `;
+
+                    galleryContainer.innerHTML = fullGalleryHTML;
+
+                    // Initialize gallery state
+                    window.currentGalleryIndex = 0;
+                    window.totalGalleryImages = loadedImages.length;
+
+                    // Add touch/swipe support
+                    this.addGalleryTouchSupport();
+
+                    // Test if images are actually loaded
+                    setTimeout(() => {
+                        const images = galleryContainer.querySelectorAll('img');
+                        console.log('Gallery images found:', images.length);
+                        images.forEach((img, index) => {
+                            console.log(`Image ${index + 1}:`, img.src, 'loaded:', img.complete);
+                        });
+
+                        // Also log the loaded images array
+                        console.log('Loaded images array:', loadedImages);
+                    }, 100);
+                } else {
+                    console.log('No images found, showing no images message');
+                    galleryContainer.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #666;">
+                            <p>No images available for this project.</p>
+                        </div>
+                    `;
+                }
+            }
+
+            show404() {
+                // Show header and footer on 404 page
+                document.querySelector('.header').style.display = 'block';
+                document.querySelector('.footer').style.display = 'block';
+
+                document.getElementById('main-content').innerHTML = `
+                    <main class="project-main">
+                        <div class="container">
+                            <div class="project-header">
+                                <h1 class="project-title">Page Not Found</h1>
+                                <p class="project-description">The page you're looking for doesn't exist.</p>
+                            </div>
+                            <div style="text-align: center; margin-top: 2rem;">
+                                <a href="#" onclick="router.navigateToHome(); return false;" class="action-button">Back to Home</a>
+                            </div>
+                        </div>
+                    </main>
+                `;
+
+                document.title = 'Page Not Found - Hartvig Solutions';
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+
+            async handleDownload(projectName) {
+                console.log('=== HANDLE DOWNLOAD DEBUG ===');
+                console.log('Project name:', projectName);
+
+                try {
+                    const response = await fetch(`/${projectName}/info.json`);
+                    if (!response.ok) {
+                        throw new Error('Failed to load project data');
+                    }
+                    const data = await response.json();
+                    console.log('Project data:', data);
+
+                    // Detect device type
+                    const userAgent = navigator.userAgent.toLowerCase();
+                    const isIOS = /iphone|ipad|ipod/.test(userAgent);
+                    const isAndroid = /android/.test(userAgent);
+
+                    console.log('Device detection:', {
+                        userAgent: navigator.userAgent,
+                        isIOS: isIOS,
+                        isAndroid: isAndroid
+                    });
+
+                    let downloadUrl = null;
+
+                    // For websites, always redirect to website
+                    if (data.website && !data.appStore && !data.googlePlay) {
+                        downloadUrl = data.website;
+                    } else if (isIOS && data.appStore) {
+                        // iOS device - redirect to App Store
+                        downloadUrl = data.appStore;
+                    } else if (isAndroid && data.googlePlay) {
+                        // Android device - redirect to Google Play
+                        downloadUrl = data.googlePlay;
+                    } else if (data.appStore) {
+                        // Default to App Store if available
+                        downloadUrl = data.appStore;
+                    } else if (data.googlePlay) {
+                        // Default to Google Play if available
+                        downloadUrl = data.googlePlay;
+                    } else if (data.website) {
+                        // Fallback to website
+                        downloadUrl = data.website;
+                    }
+
+                    console.log('Download URL logic:', {
+                        hasWebsite: !!data.website,
+                        hasAppStore: !!data.appStore,
+                        hasGooglePlay: !!data.googlePlay,
+                        selectedUrl: downloadUrl
+                    });
+
+                    if (downloadUrl) {
+                        // Redirect to the appropriate download link
+                        console.log('Redirecting to:', downloadUrl);
+                        window.location.href = downloadUrl;
+                    } else {
+                        // No download links available, show project page instead
+                        console.log('No download URL found, showing project page');
+                        this.showProject(projectName);
+                    }
+
+                } catch (error) {
+                    console.error('Error handling download:', error);
+                    this.show404();
+                }
+            }
+
+            async showAppAdsTxt(projectName) {
+                try {
+                    const response = await fetch(`/${projectName}/app-ads.txt`);
+                    if (!response.ok) {
+                        throw new Error(`app-ads.txt not found for ${projectName}`);
+                    }
+
+                    const content = await response.text();
+
+                    // Hide header and footer
+                    document.querySelector('.header').style.display = 'none';
+                    document.querySelector('.footer').style.display = 'none';
+
+                    // Show only the raw app-ads.txt content
+                    document.getElementById('main-content').innerHTML = `
+                        <pre style="white-space: pre-wrap; font-family: monospace; margin: 0; padding: 1rem; background: white;">${content}</pre>
+                    `;
+
+                    document.title = `App Ads.txt - ${projectName}`;
+
+                } catch (error) {
+                    console.error('Error loading app-ads.txt', error);
+                    this.show404();
+                }
+            }
+
+            addGalleryTouchSupport() {
+                const galleryWrapper = document.querySelector('.gallery-wrapper');
+                if (!galleryWrapper) return;
+
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                galleryWrapper.addEventListener('touchstart', (e) => {
+                    console.log('Touch start detected');
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                });
+
+                galleryWrapper.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX;
+                    const diff = startX - currentX;
+
+                    // Add visual feedback during swipe
+                    galleryWrapper.style.transform = `translateX(-${window.currentGalleryIndex * 100}%) translateX(-${diff * 0.1}px)`;
+                });
+
+                galleryWrapper.addEventListener('touchend', (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+
+                    const diff = startX - currentX;
+                    const threshold = 50; // Minimum swipe distance
+
+                    console.log('Touch end, diff:', diff, 'threshold:', threshold);
+
+                    if (Math.abs(diff) > threshold) {
+                        if (diff > 0 && window.currentGalleryIndex < window.totalGalleryImages - 1) {
+                            // Swipe left - next image
+                            console.log('Swipe left detected, going to next image');
+                            galleryNext();
+                        } else if (diff < 0 && window.currentGalleryIndex > 0) {
+                            // Swipe right - previous image
+                            console.log('Swipe right detected, going to previous image');
+                            galleryPrev();
+                        }
+                    } else {
+                        // Reset position if swipe wasn't strong enough
+                        console.log('Swipe not strong enough, resetting position');
+                        this.updateGalleryPosition();
+                    }
+                });
+
+                // Mouse drag support for desktop
+                galleryWrapper.addEventListener('mousedown', (e) => {
+                    startX = e.clientX;
+                    isDragging = true;
+                    galleryWrapper.style.cursor = 'grabbing';
+                });
+
+                galleryWrapper.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+                    currentX = e.clientX;
+                    const diff = startX - currentX;
+                    galleryWrapper.style.transform = `translateX(-${window.currentGalleryIndex * 100}%) translateX(-${diff * 0.1}px)`;
+                });
+
+                galleryWrapper.addEventListener('mouseup', (e) => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    galleryWrapper.style.cursor = 'grab';
+
+                    const diff = startX - currentX;
+                    const threshold = 50;
+
+                    if (Math.abs(diff) > threshold) {
+                        if (diff > 0 && window.currentGalleryIndex < window.totalGalleryImages - 1) {
+                            galleryNext();
+                        } else if (diff < 0 && window.currentGalleryIndex > 0) {
+                            galleryPrev();
+                        }
+                    } else {
+                        this.updateGalleryPosition();
+                    }
+                });
+
+                galleryWrapper.addEventListener('mouseleave', () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        galleryWrapper.style.cursor = 'grab';
+                        this.updateGalleryPosition();
+                    }
+                });
+            }
+
+            updateGalleryPosition() {
+                const galleryWrapper = document.querySelector('.gallery-wrapper');
+                if (galleryWrapper) {
+                    galleryWrapper.style.transform = `translateX(-${window.currentGalleryIndex * 100}%)`;
+                }
+            }
+
+            async loadPrivacyPolicy(privacyPolicyPath, showPrivacyPolicy = false) {
+                try {
+                    const response = await fetch(privacyPolicyPath);
+                    if (!response.ok) {
+                        throw new Error('Failed to load privacy policy');
+                    }
+
+                    const privacyPolicyText = await response.text();
+                    const privacyContent = document.getElementById('privacy-content');
+
+                    if (privacyContent) {
+                        privacyContent.innerHTML = this.convertMarkdownToHtml(privacyPolicyText);
+                    }
+                } catch (error) {
+                    console.error('Error loading privacy policy:', error);
+                    const privacyContent = document.getElementById('privacy-content');
+                    if (privacyContent) {
+                        privacyContent.innerHTML = `
+                            <div class="error-state">
+                                <p>Unable to load privacy policy at the moment.</p>
+                                <p>Please contact us directly for privacy information.</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+        }
+
+        // Global gallery functions
+        function galleryNext() {
+            console.log('galleryNext called, current:', window.currentGalleryIndex, 'total:', window.totalGalleryImages);
+            if (window.currentGalleryIndex < window.totalGalleryImages - 1) {
+                window.currentGalleryIndex++;
+                console.log('Moving to next image:', window.currentGalleryIndex);
+                updateGallery();
+            }
+        }
+
+        function galleryPrev() {
+            console.log('galleryPrev called, current:', window.currentGalleryIndex);
+            if (window.currentGalleryIndex > 0) {
+                window.currentGalleryIndex--;
+                console.log('Moving to previous image:', window.currentGalleryIndex);
+                updateGallery();
+            }
+        }
+
+        function galleryGoTo(index) {
+            console.log('galleryGoTo called, index:', index);
+            window.currentGalleryIndex = index;
+            updateGallery();
+        }
+
+        function updateGallery() {
+            console.log('updateGallery called, index:', window.currentGalleryIndex);
+
+            // Update gallery position
+            const galleryWrapper = document.querySelector('.gallery-wrapper');
+            if (galleryWrapper) {
+                const transform = `translateX(-${window.currentGalleryIndex * 100}%)`;
+                console.log('Setting transform:', transform);
+                galleryWrapper.style.transform = transform;
+            } else {
+                console.log('Gallery wrapper not found');
+            }
+
+            // Update indicators
+            const indicators = document.querySelectorAll('.gallery-indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === window.currentGalleryIndex);
+            });
+
+            // Update counter
+            const counter = document.querySelector('.gallery-counter');
+            if (counter) {
+                counter.textContent = `${window.currentGalleryIndex + 1} / ${window.totalGalleryImages}`;
+            }
+
+            // Update navigation buttons
+            const prevBtn = document.querySelector('.gallery-nav.prev');
+            const nextBtn = document.querySelector('.gallery-nav.next');
+            if (prevBtn) prevBtn.disabled = window.currentGalleryIndex === 0;
+            if (nextBtn) nextBtn.disabled = window.currentGalleryIndex === window.totalGalleryImages - 1;
+        }
+
+        // Initialize router
+        const router = new URLRouter();
+
+        // Global function for privacy policy toggle
+        function togglePrivacyPolicy() {
+            const privacySection = document.querySelector('.privacy-section');
+            if (privacySection) {
+                const isVisible = privacySection.style.display !== 'none';
+                privacySection.style.display = isVisible ? 'none' : 'block';
+
+                // Update URL to reflect privacy policy state
+                const currentUrl = new URL(window.location);
+                if (isVisible) {
+                    // Privacy policy is being hidden, remove parameter
+                    currentUrl.searchParams.delete('privacypolicy');
+                } else {
+                    // Privacy polis hown, add parameter
+                    currentUrl.searchParams.set('privacypolicy', 'true');
+                }
+
+                // Update URL without page reload
+                window.history.pushState({}, '', currentUrl.toString());
+            }
+        }
+    </script>
+</body>
+
+</html>

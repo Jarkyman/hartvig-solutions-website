@@ -1,0 +1,32 @@
+﻿# IDE / Editors
+.vscode/
+.idea/
+.history/
+
+# OS / Temp
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+
+# Package & builds
+node_modules/
+vendor/
+dist/
+build/
+coverage/
+.cache/
+
+# Env / Secrets
+.env
+.env.*
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# AI / tools
+.cursor/

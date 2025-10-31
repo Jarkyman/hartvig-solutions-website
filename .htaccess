@@ -1,0 +1,55 @@
+RewriteEngine On
+
+# Set proper MIME types
+AddType application/json .json
+AddType text/css .css
+AddType application/javascript .js
+AddType application/manifest+json .webmanifest
+
+# Enable CORS for JSON files
+<Files "*.json">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, User-Agent, Accept"
+    Header set Content-Type "application/json"
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+</Files>
+
+# Specific handling for mapdata.json
+<Files "mapdata.json">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, User-Agent, Accept"
+    Header set Content-Type "application/json"
+    Header set Cache-Control "public, max-age=3600"
+</Files>
+
+# Serve manifest file correctly
+<Files "site.webmanifest">
+    Header set Content-Type "application/manifest+json"
+</Files>
+
+# Disable directory browsing
+Options -Indexes
+
+# Route all requests to PHP router
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ router.php [QSA,L]
+
+# Handle project sub-paths (like /download, /app-ads.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)$ index.html [QSA,L]
+
+# Remove .html extension from URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Redirect /index to /
+RewriteRule ^index$ / [R=301,L]
+RewriteRule ^index\.html$ / [R=301,L] 

@@ -1,0 +1,8 @@
+{
+    "name": "Hint Master",
+    "description": "A puzzle game that challenges your problem-solving skills with clever hints and brain-teasing levels. Each puzzle is carefully crafted to test your logic and creativity while providing helpful hints to guide you to the solution.",
+    "appStore": "https://apps.apple.com/us/app/hint-master/id1666497757",
+    "googlePlay": "https://play.google.com/store/apps/details?id=com.hartvig.develop.hint.master",
+    "imageCount": 2,
+    "privacyPolicy": "hint-master/privacy-policy.md"
+}

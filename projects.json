@@ -1,0 +1,22 @@
+[
+    {
+        "name": "jsontomodel",
+        "description": "Use our free JSON to Model converter to instantly generate type-safe data models in popular languages like Swift, Kotlin, Dart, TypeScript, Python, Rust, and more. Whether you're building mobile or backend apps, this code generator will save you time and ensure consistency.",
+        "shortDescription": "Free JSON to Model converter for multiple languages"
+    },
+    {
+        "name": "flags-game",
+        "description": "An engaging educational game that helps you learn world flags through interactive gameplay and quizzes.",
+        "shortDescription": "Educational flag learning game"
+    },
+    {
+        "name": "hint-master",
+        "description": "It's a simple but fun and challenging game that can be played by people of all ages and can be a fun activity with friends and family or a challenging competition with a group of colleagues or classmates.",
+        "shortDescription": "Fun group game for all ages"
+    },
+    {
+        "name": "util-master",
+        "description": "Learn CS2 lineups for smokes, flashes, and molotovs on all Counter-Strike maps. Master the art of utility usage with precise positioning and timing guides to improve your tactical gameplay.",
+        "shortDescription": "CS2 utility lineup trainer"
+    }
+]

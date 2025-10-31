@@ -1,0 +1,8 @@
+{
+    "name": "Flags Game",
+    "description": "An engaging educational game that helps you learn world flags through interactive gameplay and quizzes. Test your knowledge of countries and their flags with multiple difficulty levels and fun challenges.",
+    "appStore": "https://apps.apple.com/us/app/flags-game-quiz/id6443707640",
+    "googlePlay": "https://play.google.com/store/apps/details?id=com.hartvig_develop.flags",
+    "imageCount": 5,
+    "privacyPolicy": "flags-game/privacy-policy.md"
+}
