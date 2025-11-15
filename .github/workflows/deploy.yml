@@ -32,3 +32,5 @@ jobs:
             README.md
             LICENSE
             .DS_Store
+            PROJECT_SETUP.md
+            TODO.md
