@@ -25,6 +25,7 @@ A modern, responsive portfolio site for Hartvig Solutions — showcasing apps an
 │  ├─ flags-game/
 │  ├─ hint-master/
 │  └─ util-master/
+├─ tools/                     # Self-hosted utility pages (served via /tools/{name})
 ├─ assets/                    # Logos, tool images, etc.
 ├─ .htaccess                  # Clean URL handling on Apache
 ├─ PROJECT_SETUP.md           # Detailed setup + notes
@@ -48,13 +49,21 @@ A modern, responsive portfolio site for Hartvig Solutions — showcasing apps an
   "appStore": "https://apps.apple.com/app/...",
   "googlePlay": "https://play.google.com/store/apps/details?id=...",
   "website": "https://example.com",
-  "privacyPolicy": "privacy-policy.md",
+ "privacyPolicy": "privacy-policy.md",
   "imageCount": 3
 }
 ```
 
 3. Drop screenshots into `project/your-project/images/` (use names like `image1.png`, `image2.jpg`).
 4. Update `PROJECTS_DATA` in `index.html` (or `projects.json` if you wire it up) so the project appears on the homepage.
+
+## Adding a Personal Tool Page
+
+1. Create a folder under `tools/` (e.g., `tools/golf-gps/`).
+2. Add an `index.html` file (full standalone page). Inline CSS/JS is fine.
+3. Navigate to `https://yourdomain.com/tools/golf-gps` and the router will embed it inside the site, plus provide an “Open in new tab” link.
+
+You can pass query parameters and they’ll be forwarded to the iframe, so `?course=augusta` still works.
 
 ## Tech Stack
 

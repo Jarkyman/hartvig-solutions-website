@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoke Marker</title>
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .marker {
+            position: absolute;
+            border: 2px solid red;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Smoke Marker</h1>
+    <input type="file" id="image-input" accept="image/*">
+    <div class="image-container">
+        <img id="target-image" src="" alt="Target Image" width="1000" height="1000">
+        <div id="marker" class="marker"></div>
+    </div>
+    <p>Smoke Coordinates: <span id="pixel-coordinates"></span></p>
+
+    <script>
+        document.getElementById('image-input').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                const image = document.getElementById('target-image');
+                image.src = reader.result;
+            }
+
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('target-image').addEventListener('click', function (event) {
+            const marker = document.getElementById('marker');
+            const x = event.offsetX;
+            const y = event.offsetY;
+
+            const rx = ((x - 500) / 1000).toFixed(3);
+            const ry = ((y - 500) / 1000).toFixed(3);
+
+            marker.style.left = `${x}px`;
+            marker.style.top = `${y}px`;
+
+            const result = `[${rx}, ${ry}]`;
+
+            const pixelCoordinates = document.getElementById('pixel-coordinates');
+            pixelCoordinates.innerText = result;
+
+            // Kopier til udklipsholderen
+            navigator.clipboard.writeText(result);
+        });
+    </script>
+</body>
+
+</html>

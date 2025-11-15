@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Course Mapper</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="panel">
+            <form id="golfForm">
+                <div id="fieldsContainer">
+                    <!-- Rækker vil blive genereret af JavaScript -->
+                </div>
+                <button class="custom-button" type="button" id="addRowBtn">Add Row</button>
+                <button class="custom-button" type="button" id="generateCSVBtn">Generate CSV</button>
+                <button class="custom-button" type="button" id="resetRowsBtn">Reset Rows</button>
+                <div>
+                    <button class="custom-button" type="button" id="addGreenBunkerLBtn">Add Green Bunker L</button>
+                    <button class="custom-button" type="button" id="addGreenBunkerRBtn">Add Green Bunker R</button>
+                    <button class="custom-button" type="button" id="addFairwayBunkerLBtn">Add Fairway Bunker L</button>
+                    <button class="custom-button" type="button" id="addFairwayBunkerRBtn">Add Fairway Bunker R</button>
+                    <button class="custom-button" type="button" id="add100mBtn">Add 100m</button>
+                    <button class="custom-button" type="button" id="add150mBtn">Add 150m</button>
+                    <button class="custom-button" type="button" id="add200mBtn">Add 200m</button>
+                    <button class="custom-button" type="button" id="addWaterLBtn">Add Water L</button>
+                    <button class="custom-button" type="button" id="addWaterRBtn">Add Water R</button>
+
+                    <button class="custom-button" type="button" id="addDogledBtn">Add Dogled</button>
+                    <button class="custom-button" type="button" id="addRoadLBtn">Add Road L</button>
+                    <button class="custom-button" type="button" id="addRoadCBtn">Add Road C</button>
+                    <button class="custom-button" type="button" id="addRoadRBtn">Add Road R</button>
+                </div>
+
+            </form>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <div id="popup" class="popup">
+        <textarea id="csvOutput" readonly></textarea>
+        <button id="copyBtn">Copy to Clipboard</button>
+        <button id="closePopupBtn">Close</button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>

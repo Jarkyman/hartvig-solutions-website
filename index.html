@@ -232,6 +232,7 @@
 
         // URL Router for clean URLs
         const PROJECTS_BASE_PATH = '/project';
+        const TOOLS_BASE_PATH = '/tools';
 
         class URLRouter {
             constructor() {
@@ -249,6 +250,11 @@
             getProjectBasePath(projectName) {
                 const slug = (projectName || '').toString().replace(/^\/+|\/+$/g, '');
                 return `${PROJECTS_BASE_PATH}/${slug}`;
+            }
+
+            getToolBasePath(toolName) {
+                const slug = (toolName || '').toString().replace(/^\/+|\/+$/g, '');
+                return `${TOOLS_BASE_PATH}/${slug}`;
             }
 
             resolveProjectAsset(projectName, assetPath = '') {
@@ -361,6 +367,12 @@
                     return;
                 }
 
+                if (path.startsWith('tools/')) {
+                    const toolPath = path.replace(/^tools\//, '');
+                    this.showTool(toolPath);
+                    return;
+                }
+
                 // Check for privacy policy parameter
                 const urlParams = new URLSearchParams(window.location.search);
                 const showPrivacyPolicy = urlParams.get('privacypolicy') === 'true';
@@ -377,6 +389,59 @@
                 } else {
                     this.show404();
                 }
+            }
+
+            async showTool(toolPath) {
+                const [toolName, queryString] = toolPath.split('?');
+                const slug = (toolName || '').trim();
+
+                if (!slug) {
+                    this.show404();
+                    return;
+                }
+
+                const toolBase = this.getToolBasePath(slug);
+                const toolIndexUrl = `${toolBase}/index.html`;
+
+                try {
+                    const response = await fetch(toolIndexUrl, { method: 'HEAD' });
+                    if (!response.ok) {
+                        throw new Error('Tool not found');
+                    }
+                } catch (error) {
+                    console.error('Error loading tool page:', error);
+                    this.show404();
+                    return;
+                }
+
+                const prettyName = slug
+                    .replace(/[-_]/g, ' ')
+                    .replace(/\b\w/g, (char) => char.toUpperCase());
+
+                const iframeUrl = queryString ? `${toolIndexUrl}?${queryString}` : toolIndexUrl;
+
+                document.querySelector('.header').style.display = 'block';
+                document.querySelector('.footer').style.display = 'block';
+
+                document.getElementById('main-content').innerHTML = `
+                    <section class="tool-page">
+                        <div class="container">
+                            <div class="tool-page__header">
+                                <div>
+                                    <p class="tool-page__eyebrow">Personal Tool</p>
+                                    <h1 class="tool-page__title">${prettyName}</h1>
+                                </div>
+                                <a class="tool-page__open" href="${iframeUrl}" target="_blank" rel="noopener">Open in new tab</a>
+                            </div>
+                            <div class="tool-page__frame">
+                                <iframe src="${iframeUrl}" title="${prettyName}" loading="lazy" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </section>
+                `;
+
+                document.title = `${prettyName} - Hartvig Solutions Tools`;
+                window.scrollTo(0, 0);
             }
 
             showHome(scrollTargetId = null) {
