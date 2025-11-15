@@ -495,6 +495,7 @@ section+section {
     display: grid;
     place-items: center;
     min-height: clamp(140px, 36vw, 180px);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
 .tool-image {
@@ -517,6 +518,27 @@ section+section {
     font-weight: 600;
     letter-spacing: 0.02em;
     backdrop-filter: blur(6px);
+}
+
+.tool-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 20%, rgba(46, 107, 255, 0.25), transparent 55%);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+}
+
+.tool-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(46, 107, 255, 0.35);
+    box-shadow: 0 20px 45px rgba(12, 18, 30, 0.55);
+}
+
+.tool-card:hover::before {
+    opacity: 1;
 }
 
 .tool-modal {

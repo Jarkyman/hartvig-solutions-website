@@ -1,29 +1,28 @@
 // Navigation functionality
 const TOOL_DESCRIPTION_FALLBACKS = {
-    'flutter': 'Flutter is my preferred UI toolkit for building pixel-perfect, multi-platform apps from a single codebase with native performance.',
-    'dart': 'Dart powers my Flutter projects with a modern, null-safe language optimized for fast, reliable mobile and web apps.',
-    'swift': 'Swift lets me craft high-performance, native iOS experiences with strong safety guarantees and expressive syntax.',
-    'kotlin': 'Kotlin enables concise, reliable Android development with full interoperability and multiplatform reach.',
-    'android': 'Android Studio and the Android SDK help me deliver polished experiences to the world’s largest mobile ecosystem.',
-    'ios': 'iOS development combines Apple’s best practices with robust tooling to reach engaged, high-value users.',
-    'xcode': 'Xcode is my go-to IDE for compiling, profiling, and shipping native Apple platform apps.',
-    'python': 'Python accelerates backend services, data processing, and automation with its vast ecosystem.',
-    'firebase': 'Firebase provides production-ready authentication, databases, and analytics that keep apps scalable from day one.',
-    'supabase': 'Supabase delivers an open-source backend stack—Postgres, auth, storage—perfect for rapid MVP iterations.',
-    'next.js': 'Next.js powers fast, SEO-ready web apps with hybrid rendering and an ergonomic developer experience.',
-    'react': 'React’s component-driven model lets me ship dynamic interfaces quickly across web and native targets.',
-    'typescript': 'TypeScript catches bugs early and keeps complex codebases maintainable with powerful static typing.',
-    'node.js': 'Node.js enables highly performant APIs and tooling built on the ubiquitous JavaScript runtime.',
-    'figma': 'Figma keeps design and engineering in sync with collaborative UI workflows and precise handoff.',
-    'github': 'GitHub manages version control, reviews, and automated deployments across every project.',
-    'docker': 'Docker guarantees consistent environments from local development to production with lightweight containers.',
-    'postman': 'Postman streamlines API design, testing, and collaboration so services stay reliable as they grow.'
+    'flutter': 'Hartvig Solutions uses Flutter to ship pixel-perfect cross-platform apps with a single codebase, letting startups hire one Flutter developer and reach iOS, Android, web, and desktop faster.',
+    'dart': 'Dart powers our Flutter builds with type-safe, null-safe code that compiles to native ARM for App Store and Google Play, ensuring every UI stays fast and SEO-friendly.',
+    'swift': 'Swift is our tool for premium iOS development—clean, performant code that integrates Apple services so your product feels like a first-class native app.',
+    'kotlin': 'We rely on Kotlin to craft modern Android experiences, combining concise syntax with Jetpack libraries to deliver stable apps to Google Play.',
+    'android': 'Android Studio and the Android SDK let us profile, automate, and optimize every feature so Android users get polished interactions and fast updates.',
+    'ios': 'Native iOS tooling ensures Hartvig Solutions delivers apps that meet Apple’s UX standards, support the newest devices, and feel instantly familiar to users.',
+    'xcode': 'Xcode is where we compile, profile, and archive native builds, keeping CI/CD tight and ensuring every TestFlight or App Store release is stable.',
+    'python': 'Python backs our automation scripts and backend services, powering data processing, API integrations, and ETL flows that keep your product running.',
+    'firebase': 'Firebase gives clients instant backend essentials—Auth, Firestore, Storage, Analytics—so we can launch MVPs with Google-grade reliability.',
+    'supabase': 'Supabase is our open-source Postgres stack for products that need SQL, auth, storage, and edge functions without the vendor lock-in.',
+    'next.js': 'Next.js helps us build SEO-ready marketing sites, dashboards, and web apps with hybrid rendering so search engines and users get instant load times.',
+    'react': 'React is our go-to for component-driven UIs across web and native, letting us reuse patterns and maintain large codebases predictably.',
+    'typescript': 'TypeScript keeps large projects safe: we model every API and UI contract in types so refactors stay predictable and bugs are caught before production.',
+    'node.js': 'Node.js powers our APIs, webhooks, and tooling—perfect for real-time features, serverless functions, and scalable backend services.',
+    'figma': 'Figma keeps design and engineering aligned; we deliver interactive prototypes, component libraries, and frictionless handoff straight into code.',
+    'github': 'GitHub manages our version control, code reviews, and CI workflows, giving clients transparency and automated testing on every branch.',
+    'docker': 'Docker lets us mirror production locally, orchestrate services for staging, and deploy consistent containers to any cloud.',
+    'postman': 'Postman is our API Swiss Army knife for designing, testing, documenting, and monitoring every endpoint before it reaches customers.'
 };
 
 document.addEventListener('DOMContentLoaded', function () {
     // Smooth navigation
     const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('section');
     const header = document.querySelector('.header');
 
     const smoothScrollTo = (targetId) => {
@@ -51,34 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
             smoothScrollTo(href);
         });
     });
-
-    const highlightSection = () => {
-        const scrollCenter = window.scrollY + (window.innerHeight / 2);
-        const pageBottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 2;
-        let current = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            const sectionBottom = sectionTop + sectionHeight;
-
-            if (scrollCenter >= sectionTop && scrollCenter < sectionBottom) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        if (pageBottom && sections.length) {
-            const lastSection = sections[sections.length - 1];
-            current = lastSection.getAttribute('id') || current;
-        }
-
-        navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
-        });
-    };
-
-    window.addEventListener('scroll', highlightSection);
-    highlightSection();
 
     // Load projects
     loadProjects();
@@ -226,16 +197,16 @@ function loadTools() {
 
         switch (name.toLowerCase()) {
             case 'flutter':
-                seoDescription = 'Flutter is my preferred UI toolkit for crafting pixel-perfect, multi-platform apps with shared UI, hot reload, and native performance for iOS, Android, desktop, and web.';
+                seoDescription = 'Need a Flutter developer? Hartvig Solutions builds production apps with Flutter that share 95% of code between iOS, Android, and web so you launch faster, cheaper, and with native performance.';
                 break;
             case 'dart':
-                seoDescription = 'Dart powers my Flutter work with a modern, null-safe language optimized for reactive UIs, enabling fast compilation to native ARM, x64, and highly-performant web output.';
+                seoDescription = 'Our Dart expertise powers advanced Flutter architecture—null-safe code, layered domains, and lightning-fast compiles that keep your product stable from MVP to scale.';
                 break;
             case 'swift':
-                seoDescription = 'Swift lets me build native iOS apps with strong type safety, blazing performance, and language features that scale from lean prototypes to production-ready platforms.';
+                seoDescription = 'When a feature demands native iOS precision, we build it in Swift with Combine, SwiftUI, and native SDKs so your Apple users get the premium experience they expect.';
                 break;
             case 'kotlin':
-                seoDescription = 'Kotlin is my go-to for Android development thanks to its concise syntax, multiplatform reach, and full interoperability with existing Java codebases.';
+                seoDescription = 'Hartvig Solutions pairs Kotlin with Jetpack Compose and modern Android tooling to deliver robust apps that feel perfectly at home on every Google Play device.';
                 break;
             default:
                 break;
@@ -252,7 +223,7 @@ function loadTools() {
         const loadingAttr = index === 0 ? 'eager' : 'lazy';
         return `
             <div class="tool-card" data-tool="${tool.name}">
-                <img src="${tool.image}" alt="${tool.name}" class="tool-image" loading="${loadingAttr}" />
+                <img src="${tool.image}" alt="${tool.name}" class="tool-image" loading="${loadingAttr}" draggable="false" />
                 <span class="tool-label">${tool.name}</span>
             </div>
         `;
@@ -272,6 +243,9 @@ function loadTools() {
     toolCards.forEach((card, index) => {
         if (index >= tools.length) {
             card.setAttribute('aria-hidden', 'true');
+            card.setAttribute('tabindex', '-1');
+        } else {
+            card.setAttribute('tabindex', '0');
         }
 
         const info = toolInfoMap.get((card.dataset.tool || '').toLowerCase());
@@ -279,11 +253,6 @@ function loadTools() {
             return;
         }
 
-        if (card.getAttribute('aria-hidden') === 'true') {
-            return;
-        }
-
-        card.setAttribute('tabindex', '0');
         card.setAttribute('role', 'button');
         card.setAttribute('aria-label', `Read more about ${info.name}`);
 
@@ -296,8 +265,11 @@ function loadTools() {
 
         card.addEventListener('click', (event) => {
             const grid = card.closest('.tools-grid');
-            if (grid && grid.dataset.preventClick === 'true') {
-                return;
+            if (grid) {
+                const lastDragTime = Number(grid.dataset.lastDragTime || '0');
+                if (performance.now() - lastDragTime < 220) {
+                    return;
+                }
             }
             handleOpen(event);
         });
@@ -373,11 +345,11 @@ function startMarquee(container, track, options = {}) {
     let resumeTimeout = null;
     let dragStartX = 0;
     let hasDragged = false;
-    const dragThreshold = 6;
-
-    if (!container.dataset.preventClick) {
-        container.dataset.preventClick = 'false';
-    }
+    const dragThreshold = 20;
+    const dragDelayMs = 140;
+    let dragStartTime = 0;
+    let lastDragTimestamp = 0;
+    container.dataset.lastDragTime = '0';
 
     const updateSegmentWidth = () => {
         segmentWidth = Math.max(track.scrollWidth / effectiveClones, 1);
@@ -459,20 +431,13 @@ function startMarquee(container, track, options = {}) {
         if (!hasDragged) {
             hasDragged = true;
             container.classList.add('is-dragging');
-            container.dataset.preventClick = 'true';
         }
+        lastDragTimestamp = performance.now();
+        container.dataset.lastDragTime = `${lastDragTimestamp}`;
     };
 
     const releaseDragState = () => {
         container.classList.remove('is-dragging');
-        const reset = () => {
-            container.dataset.preventClick = 'false';
-        };
-        if (hasDragged) {
-            setTimeout(reset, 120);
-        } else {
-            reset();
-        }
         hasDragged = false;
     };
 
@@ -487,6 +452,7 @@ function startMarquee(container, track, options = {}) {
         lastPointerX = event.clientX;
         dragStartX = event.clientX;
         hasDragged = false;
+        dragStartTime = performance.now();
     };
 
     const handlePointerMove = (event) => {
@@ -494,7 +460,8 @@ function startMarquee(container, track, options = {}) {
             return;
         }
         const totalDelta = event.clientX - dragStartX;
-        if (!hasDragged && Math.abs(totalDelta) >= dragThreshold) {
+        const elapsed = performance.now() - dragStartTime;
+        if (!hasDragged && Math.abs(totalDelta) >= dragThreshold && elapsed >= dragDelayMs) {
             markDragActive();
         }
         if (!hasDragged) {
@@ -546,9 +513,8 @@ function startMarquee(container, track, options = {}) {
         resumeWithDelay();
         setTimeout(() => {
             container.classList.remove('is-dragging');
-            container.dataset.preventClick = 'false';
             hasDragged = false;
-        }, 250);
+        }, 180);
     };
 
     container.addEventListener('mouseenter', pause);
@@ -583,7 +549,7 @@ function startMarquee(container, track, options = {}) {
         window.removeEventListener('pointercancel', handlePointerLeave);
         container.removeEventListener('wheel', handleWheel);
         clearTimeout(resumeTimeout);
-        container.dataset.preventClick = 'false';
+        container.dataset.lastDragTime = '0';
     };
 }
 

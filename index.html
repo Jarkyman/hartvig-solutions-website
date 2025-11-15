@@ -231,6 +231,8 @@
         ];
 
         // URL Router for clean URLs
+        const PROJECTS_BASE_PATH = '/project';
+
         class URLRouter {
             constructor() {
                 this.routes = {
@@ -242,6 +244,27 @@
                 };
 
                 this.init();
+            }
+
+            getProjectBasePath(projectName) {
+                const slug = (projectName || '').toString().replace(/^\/+|\/+$/g, '');
+                return `${PROJECTS_BASE_PATH}/${slug}`;
+            }
+
+            resolveProjectAsset(projectName, assetPath = '') {
+                if (!assetPath) {
+                    return this.getProjectBasePath(projectName);
+                }
+
+                if (/^(https?:)?\/\//i.test(assetPath)) {
+                    return assetPath;
+                }
+
+                if (assetPath.startsWith('/')) {
+                    return assetPath;
+                }
+
+                return `${this.getProjectBasePath(projectName)}/${assetPath.replace(/^\/+/, '')}`;
             }
 
             init() {
@@ -447,7 +470,8 @@
 
             async showProject(projectName, showPrivacyPolicy = false) {
                 try {
-                    const response = await fetch(`/${projectName}/info.json`);
+                    const basePath = this.getProjectBasePath(projectName);
+                    const response = await fetch(`${basePath}/info.json`);
 
                     if (!response.ok) {
                         throw new Error(`Failed to load project data: ${response.status} ${response.statusText}`);
@@ -512,7 +536,7 @@
 
                 // Load privacy policy if needed
                 if (data.privacyPolicy) {
-                    this.loadPrivacyPolicy(data.privacyPolicy, showPrivacyPolicy);
+                    this.loadPrivacyPolicy(projectName, data.privacyPolicy, showPrivacyPolicy);
                 }
 
                 // Scroll to top
@@ -558,6 +582,7 @@
 
             async loadProjectImages(projectName, imageCount = 0) {
                 const galleryContainer = document.getElementById('gallery-container');
+                const resolveAsset = (relativePath) => this.resolveProjectAsset(projectName, `images/${relativePath}`);
 
                 // Common image extensions (PNG first since that's what we have)
                 const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
@@ -568,7 +593,7 @@
                     for (let i = 1; i <= imageCount; i++) {
                         for (let ext of imageExtensions) {
                             // Use absolute path to ensure images load correctly
-                            const imageUrl = `/${projectName}/images/image${i}.${ext}`;
+                            const imageUrl = resolveAsset(`image${i}.${ext}`);
                             try {
                                 const response = await fetch(imageUrl, { method: 'HEAD' });
                                 if (response.ok) {
@@ -589,7 +614,7 @@
                     for (let name of commonNames) {
                         for (let num of numbers) {
                             for (let ext of imageExtensions) {
-                                const imageUrl = `/${projectName}/images/${name}${num}.${ext}`;
+                                const imageUrl = resolveAsset(`${name}${num}.${ext}`);
                                 try {
                                     const response = await fetch(imageUrl, { method: 'HEAD' });
                                     if (response.ok) {
@@ -606,7 +631,7 @@
                     // Also try just the name without numbers
                     for (let name of commonNames) {
                         for (let ext of imageExtensions) {
-                            const imageUrl = `/${projectName}/images/${name}.${ext}`;
+                            const imageUrl = resolveAsset(`${name}.${ext}`);
                             try {
                                 const response = await fetch(imageUrl, { method: 'HEAD' });
                                 if (response.ok) {
@@ -711,7 +736,7 @@
                 console.log('Project name:', projectName);
 
                 try {
-                    const response = await fetch(`/${projectName}/info.json`);
+                    const response = await fetch(`${this.getProjectBasePath(projectName)}/info.json`);
                     if (!response.ok) {
                         throw new Error('Failed to load project data');
                     }
@@ -776,7 +801,7 @@
 
             async showAppAdsTxt(projectName) {
                 try {
-                    const response = await fetch(`/${projectName}/app-ads.txt`);
+                    const response = await fetch(this.resolveProjectAsset(projectName, 'app-ads.txt'));
                     if (!response.ok) {
                         throw new Error(`app-ads.txt not found for ${projectName}`);
                     }
@@ -898,9 +923,10 @@
                 }
             }
 
-            async loadPrivacyPolicy(privacyPolicyPath, showPrivacyPolicy = false) {
+            async loadPrivacyPolicy(projectName, privacyPolicyPath, showPrivacyPolicy = false) {
                 try {
-                    const response = await fetch(privacyPolicyPath);
+                    const resolvedPath = this.resolveProjectAsset(projectName, privacyPolicyPath);
+                    const response = await fetch(resolvedPath);
                     if (!response.ok) {
                         throw new Error('Failed to load privacy policy');
                     }
