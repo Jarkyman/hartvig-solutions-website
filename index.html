@@ -115,6 +115,11 @@
                     <img src="Logo.png" alt="Hartvig Solutions Logo" class="logo-image">
                     <h1>Hartvig Solutions</h1>
                 </div>
+                <nav class="nav-menu" aria-label="Primary">
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#tools" class="nav-link">Tools</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
             </div>
         </div>
     </header>
@@ -147,6 +152,16 @@
             </div>
         </section>
 
+        <!-- Tools Section -->
+        <section id="tools" class="tools">
+            <div class="container">
+                <h2 class="section-title">Tools</h2>
+                <div id="tools-grid" class="tools-grid" aria-label="Toolkit carousel">
+                    <!-- Tools will be loaded here via JavaScript -->
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
@@ -161,6 +176,25 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <div id="tool-modal" class="tool-modal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="tool-modal__overlay" data-modal-close></div>
+        <div class="tool-modal__dialog" role="document">
+            <button class="tool-modal__close" type="button" aria-label="Close tool details" data-modal-close>&times;</button>
+            <div class="tool-modal__body">
+                <div class="tool-modal__header">
+                    <img src="" alt="" class="tool-modal__image" id="tool-modal-image">
+                    <div>
+                        <p class="tool-modal__eyebrow">Tool spotlight</p>
+                        <h3 class="tool-modal__title" id="tool-modal-title">Tool</h3>
+                    </div>
+                </div>
+                <p class="tool-modal__description" id="tool-modal-description">
+                    Description will appear here.
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -197,6 +231,9 @@
         ];
 
         // URL Router for clean URLs
+        const PROJECTS_BASE_PATH = '/project';
+        const TOOLS_BASE_PATH = '/tools';
+
         class URLRouter {
             constructor() {
                 this.routes = {
@@ -208,6 +245,32 @@
                 };
 
                 this.init();
+            }
+
+            getProjectBasePath(projectName) {
+                const slug = (projectName || '').toString().replace(/^\/+|\/+$/g, '');
+                return `${PROJECTS_BASE_PATH}/${slug}`;
+            }
+
+            getToolBasePath(toolName) {
+                const slug = (toolName || '').toString().replace(/^\/+|\/+$/g, '');
+                return `${TOOLS_BASE_PATH}/${slug}`;
+            }
+
+            resolveProjectAsset(projectName, assetPath = '') {
+                if (!assetPath) {
+                    return this.getProjectBasePath(projectName);
+                }
+
+                if (/^(https?:)?\/\//i.test(assetPath)) {
+                    return assetPath;
+                }
+
+                if (assetPath.startsWith('/')) {
+                    return assetPath;
+                }
+
+                return `${this.getProjectBasePath(projectName)}/${assetPath.replace(/^\/+/, '')}`;
             }
 
             init() {
@@ -298,6 +361,18 @@
                     return;
                 }
 
+                const sectionAnchors = new Set(['home', 'projects', 'tools', 'contact']);
+                if (sectionAnchors.has(path)) {
+                    this.showHome(path);
+                    return;
+                }
+
+                if (path.startsWith('tools/')) {
+                    const toolPath = path.replace(/^tools\//, '');
+                    this.showTool(toolPath);
+                    return;
+                }
+
                 // Check for privacy policy parameter
                 const urlParams = new URLSearchParams(window.location.search);
                 const showPrivacyPolicy = urlParams.get('privacypolicy') === 'true';
@@ -316,7 +391,60 @@
                 }
             }
 
-            showHome() {
+            async showTool(toolPath) {
+                const [toolName, queryString] = toolPath.split('?');
+                const slug = (toolName || '').trim();
+
+                if (!slug) {
+                    this.show404();
+                    return;
+                }
+
+                const toolBase = this.getToolBasePath(slug);
+                const toolIndexUrl = `${toolBase}/index.html`;
+
+                try {
+                    const response = await fetch(toolIndexUrl, { method: 'HEAD' });
+                    if (!response.ok) {
+                        throw new Error('Tool not found');
+                    }
+                } catch (error) {
+                    console.error('Error loading tool page:', error);
+                    this.show404();
+                    return;
+                }
+
+                const prettyName = slug
+                    .replace(/[-_]/g, ' ')
+                    .replace(/\b\w/g, (char) => char.toUpperCase());
+
+                const iframeUrl = queryString ? `${toolIndexUrl}?${queryString}` : toolIndexUrl;
+
+                document.querySelector('.header').style.display = 'block';
+                document.querySelector('.footer').style.display = 'block';
+
+                document.getElementById('main-content').innerHTML = `
+                    <section class="tool-page">
+                        <div class="container">
+                            <div class="tool-page__header">
+                                <div>
+                                    <p class="tool-page__eyebrow">Personal Tool</p>
+                                    <h1 class="tool-page__title">${prettyName}</h1>
+                                </div>
+                                <a class="tool-page__open" href="${iframeUrl}" target="_blank" rel="noopener">Open in new tab</a>
+                            </div>
+                            <div class="tool-page__frame">
+                                <iframe src="${iframeUrl}" title="${prettyName}" loading="lazy" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </section>
+                `;
+
+                document.title = `${prettyName} - Hartvig Solutions Tools`;
+                window.scrollTo(0, 0);
+            }
+
+            showHome(scrollTargetId = null) {
                 // Show header and footer on home page
                 document.querySelector('.header').style.display = 'block';
                 document.querySelector('.footer').style.display = 'block';
@@ -347,6 +475,16 @@
                         </div>
                     </section>
 
+                    <!-- Tools Section -->
+                    <section id="tools" class="tools">
+                        <div class="container">
+                            <h2 class="section-title">Tools</h2>
+                            <div id="tools-grid" class="tools-grid" aria-label="Toolkit carousel">
+                                <!-- Tools will be loaded here via JavaScript -->
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Contact Section -->
                     <section id="contact" class="contact">
                         <div class="container">
@@ -365,14 +503,40 @@
 
                 // Load projects
                 loadProjects();
+                loadTools();
 
-                // Scroll to top
-                window.scrollTo(0, 0);
+                if (scrollTargetId) {
+                    requestAnimationFrame(() => {
+                        this.scrollToSection(scrollTargetId);
+                    });
+                } else {
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            scrollToSection(sectionId) {
+                const selector = sectionId.startsWith('#') ? sectionId : `#${sectionId}`;
+                const target = document.querySelector(selector);
+                if (!target) {
+                    return;
+                }
+
+                const header = document.querySelector('.header');
+                const headerOffset = header ? header.offsetHeight + 12 : 0;
+                const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+                const offsetPosition = Math.max(elementPosition - headerOffset, 0);
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
             }
 
             async showProject(projectName, showPrivacyPolicy = false) {
                 try {
-                    const response = await fetch(`/${projectName}/info.json`);
+                    const basePath = this.getProjectBasePath(projectName);
+                    const response = await fetch(`${basePath}/info.json`);
 
                     if (!response.ok) {
                         throw new Error(`Failed to load project data: ${response.status} ${response.statusText}`);
@@ -437,7 +601,7 @@
 
                 // Load privacy policy if needed
                 if (data.privacyPolicy) {
-                    this.loadPrivacyPolicy(data.privacyPolicy, showPrivacyPolicy);
+                    this.loadPrivacyPolicy(projectName, data.privacyPolicy, showPrivacyPolicy);
                 }
 
                 // Scroll to top
@@ -483,6 +647,7 @@
 
             async loadProjectImages(projectName, imageCount = 0) {
                 const galleryContainer = document.getElementById('gallery-container');
+                const resolveAsset = (relativePath) => this.resolveProjectAsset(projectName, `images/${relativePath}`);
 
                 // Common image extensions (PNG first since that's what we have)
                 const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
@@ -493,7 +658,7 @@
                     for (let i = 1; i <= imageCount; i++) {
                         for (let ext of imageExtensions) {
                             // Use absolute path to ensure images load correctly
-                            const imageUrl = `/${projectName}/images/image${i}.${ext}`;
+                            const imageUrl = resolveAsset(`image${i}.${ext}`);
                             try {
                                 const response = await fetch(imageUrl, { method: 'HEAD' });
                                 if (response.ok) {
@@ -514,7 +679,7 @@
                     for (let name of commonNames) {
                         for (let num of numbers) {
                             for (let ext of imageExtensions) {
-                                const imageUrl = `/${projectName}/images/${name}${num}.${ext}`;
+                                const imageUrl = resolveAsset(`${name}${num}.${ext}`);
                                 try {
                                     const response = await fetch(imageUrl, { method: 'HEAD' });
                                     if (response.ok) {
@@ -531,7 +696,7 @@
                     // Also try just the name without numbers
                     for (let name of commonNames) {
                         for (let ext of imageExtensions) {
-                            const imageUrl = `/${projectName}/images/${name}.${ext}`;
+                            const imageUrl = resolveAsset(`${name}.${ext}`);
                             try {
                                 const response = await fetch(imageUrl, { method: 'HEAD' });
                                 if (response.ok) {
@@ -636,7 +801,7 @@
                 console.log('Project name:', projectName);
 
                 try {
-                    const response = await fetch(`/${projectName}/info.json`);
+                    const response = await fetch(`${this.getProjectBasePath(projectName)}/info.json`);
                     if (!response.ok) {
                         throw new Error('Failed to load project data');
                     }
@@ -701,7 +866,7 @@
 
             async showAppAdsTxt(projectName) {
                 try {
-                    const response = await fetch(`/${projectName}/app-ads.txt`);
+                    const response = await fetch(this.resolveProjectAsset(projectName, 'app-ads.txt'));
                     if (!response.ok) {
                         throw new Error(`app-ads.txt not found for ${projectName}`);
                     }
@@ -823,9 +988,10 @@
                 }
             }
 
-            async loadPrivacyPolicy(privacyPolicyPath, showPrivacyPolicy = false) {
+            async loadPrivacyPolicy(projectName, privacyPolicyPath, showPrivacyPolicy = false) {
                 try {
-                    const response = await fetch(privacyPolicyPath);
+                    const resolvedPath = this.resolveProjectAsset(projectName, privacyPolicyPath);
+                    const response = await fetch(resolvedPath);
                     if (!response.ok) {
                         throw new Error('Failed to load privacy policy');
                     }
