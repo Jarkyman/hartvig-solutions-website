@@ -4,7 +4,7 @@
 
 To add a new project, you only need to:
 
-1. **Create a project folder** (e.g., `my-new-project/`)
+1. **Create a project folder inside `project/`** (e.g., `project/my-new-project/`)
 2. **Add `info.json`** with project details
 3. **Add images** (optional) to `images/` folder
 4. **Add to `projects.json`** for homepage listing
@@ -12,7 +12,7 @@ To add a new project, you only need to:
 ## Example Project Structure
 
 ```
-my-new-project/
+project/my-new-project/
 ├── info.json           # Your project details
 └── images/             # Optional: project screenshots
     ├── screenshot1.jpg
