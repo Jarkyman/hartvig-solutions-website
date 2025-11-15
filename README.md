@@ -75,6 +75,11 @@ You can pass query parameters and they’ll be forwarded to the iframe, so `?cou
 - Works on GitHub Pages, Netlify, Vercel (as a static site)
 - For Apache hosts: upload the repository and keep `.htaccess` so `/project-name` URLs resolve to `index.html`
 
+## Branch strategy
+
+- `main`: Development branch (latest changes, not always stable)
+- `prod`: Production branch (deployed to InfinityFree)
+
 ## License
 
 All rights reserved — Hartvig Solutions, 2025
