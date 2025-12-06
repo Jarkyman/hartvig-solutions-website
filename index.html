@@ -241,19 +241,20 @@
                     'flags-game': this.showProject,
                     'hint-master': this.showProject,
                     'util-master': this.showProject,
-                    'jsontomodel': this.showProject
+                    'jsontomodel': this.showProject,
+                    'julekonkurrencer': this.showProject
                 };
 
                 this.init();
             }
 
             getProjectBasePath(projectName) {
-                const slug = (projectName || '').toString().replace(/^\/+|\/+$/g, '');
+                const slug = (projectName || '').toString().trim().replace(/^\/+|\/+$/g, '').toLowerCase();
                 return `${PROJECTS_BASE_PATH}/${slug}`;
             }
 
             getToolBasePath(toolName) {
-                const slug = (toolName || '').toString().replace(/^\/+|\/+$/g, '');
+                const slug = (toolName || '').toString().trim().replace(/^\/+|\/+$/g, '').toLowerCase();
                 return `${TOOLS_BASE_PATH}/${slug}`;
             }
 
@@ -307,9 +308,10 @@
 
             navigateToProject(projectName) {
                 // Always use hash-based routing for consistency
-                console.log('Navigating to project:', projectName);
-                window.history.pushState({}, '', `#${projectName}`);
-                this.showProject(projectName);
+                const slug = (projectName || '').toString().trim().toLowerCase();
+                console.log('Navigating to project:', slug);
+                window.history.pushState({}, '', `#${slug}`);
+                this.showProject(slug);
             }
 
             navigateToHome() {
@@ -338,6 +340,7 @@
 
                 // Remove any file extensions
                 path = path.replace('.html', '');
+                const normalizedPath = path.toLowerCase();
 
                 // Debug logging (commented out to reduce console spam)
                 // console.log('=== ROUTER DEBUG ===');
@@ -348,27 +351,27 @@
                 // console.log('Available routes:', Object.keys(this.routes));
 
                 // Check for download route (project-specific)
-                if (path.includes('/download')) {
-                    const projectName = path.split('/')[0];
+                if (normalizedPath.includes('/download')) {
+                    const projectName = normalizedPath.split('/')[0];
                     this.handleDownload(projectName);
                     return;
                 }
 
                 // Check for app-ads.txt route (project-specific)
-                if (path.includes('/app-ads.txt')) {
-                    const projectName = path.split('/')[0];
+                if (normalizedPath.includes('/app-ads.txt')) {
+                    const projectName = normalizedPath.split('/')[0];
                     this.showAppAdsTxt(projectName);
                     return;
                 }
 
                 const sectionAnchors = new Set(['home', 'projects', 'tools', 'contact']);
-                if (sectionAnchors.has(path)) {
-                    this.showHome(path);
+                if (sectionAnchors.has(normalizedPath)) {
+                    this.showHome(normalizedPath);
                     return;
                 }
 
-                if (path.startsWith('tools/')) {
-                    const toolPath = path.replace(/^tools\//, '');
+                if (normalizedPath.startsWith('tools/')) {
+                    const toolPath = normalizedPath.replace(/^tools\//, '');
                     this.showTool(toolPath);
                     return;
                 }
@@ -377,14 +380,14 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const showPrivacyPolicy = urlParams.get('privacypolicy') === 'true';
 
-                const route = this.routes[path];
+                const route = this.routes[normalizedPath];
 
                 if (route) {
-                    if (path && showPrivacyPolicy) {
+                    if (normalizedPath && showPrivacyPolicy) {
                         // If it's a project and privacy policy is requested, show project with privacy policy open
-                        this.showProject(path, showPrivacyPolicy);
+                        this.showProject(normalizedPath, showPrivacyPolicy);
                     } else {
-                        route.call(this, path);
+                        route.call(this, normalizedPath);
                     }
                 } else {
                     this.show404();
@@ -393,7 +396,7 @@
 
             async showTool(toolPath) {
                 const [toolName, queryString] = toolPath.split('?');
-                const slug = (toolName || '').trim();
+                const slug = (toolName || '').trim().toLowerCase();
 
                 if (!slug) {
                     this.show404();
@@ -581,7 +584,6 @@
                             <!-- Privacy Policy -->
                             ${data.privacyPolicy ? `
                                 <div class="privacy-section" style="display: ${showPrivacyPolicy ? 'block' : 'none'};">
-                                    <h2>Privacy Policy</h2>
                                     <div class="privacy-content" id="privacy-content">
                                         <div class="loading-state">Loading privacy policy...</div>
                                     </div>
@@ -635,14 +637,36 @@
             }
 
             convertMarkdownToHtml(markdown) {
-                return markdown
-                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
-                    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-                    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>')
-                    .replace(/\n/gim, '<br>');
+                const normalized = (markdown || '').replace(/\r\n/g, '\n').trim();
+
+                const inlineConverted = normalized
+                    .replace(/^### (.*)$/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*)$/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*)$/gim, '<h1>$1</h1>')
+                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+                    .replace(/^- (.*)$/gim, '<li>$1</li>');
+
+                const blocks = inlineConverted.split(/\n{2,}/);
+
+                const htmlBlocks = blocks.map(block => {
+                    const hasList = /^<li>/m.test(block);
+                    const hasHeading = /^<h[1-3]>/.test(block);
+                    let content = block.replace(/\n/g, '<br>');
+
+                    if (hasList) {
+                        return `<ul>${content}</ul>`;
+                    }
+
+                    if (hasHeading) {
+                        return content;
+                    }
+
+                    return `<p>${content}</p>`;
+                });
+
+                return htmlBlocks.join('');
             }
 
             async loadProjectImages(projectName, imageCount = 0) {
