@@ -39,7 +39,7 @@ A modern, responsive portfolio site for Hartvig Solutions — showcasing apps an
 
 ## Adding a Project
 
-1. Create a folder under `project/` (e.g., `project/your-project/`).
+1. Create a folder under `project/` (e.g., `project/your-project/`). Keep the folder name lowercase and use the same slug everywhere.
 2. Add `info.json` with metadata:
 
 ```
@@ -55,7 +55,8 @@ A modern, responsive portfolio site for Hartvig Solutions — showcasing apps an
 ```
 
 3. Drop screenshots into `project/your-project/images/` (use names like `image1.png`, `image2.jpg`).
-4. Update `PROJECTS_DATA` in `index.html` (or `projects.json` if you wire it up) so the project appears on the homepage.
+4. Register the route in `index.html` inside `this.routes` (search for `URLRouter`), so `/#your-project` works.
+5. (Optional) Show it on the homepage: add an entry to `PROJECTS_DATA` in `index.html` (and the fallback list in `script.js` if you want parity). Skip this if you want the project hidden from the carousel.
 
 ## Adding a Personal Tool Page
 
