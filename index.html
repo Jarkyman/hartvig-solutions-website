@@ -227,6 +227,11 @@
                 "name": "util-master",
                 "description": "Learn CS2 lineups for smokes, flashes, and molotovs on all Counter-Strike maps. Master the art of utility usage with precise positioning and timing guides to improve your tactical gameplay.",
                 "shortDescription": "CS2 utility lineup trainer"
+            },
+            {
+                "name": "pocket-coach",
+                "description": "Pocket Coach is your personal AI trainer in your pocket, delivering tailored guidance, daily exercises, and motivating feedback based on your goals and habits. The app learns what matters to you and helps you take small, realistic steps toward better focus, health, and performance.",
+                "shortDescription": "Personal AI trainer for daily guidance"
             }
         ];
 
@@ -242,7 +247,8 @@
                     'hint-master': this.showProject,
                     'util-master': this.showProject,
                     'jsontomodel': this.showProject,
-                    'julekonkurrencer': this.showProject
+                    'julekonkurrencer': this.showProject,
+                    'pocket-coach': this.showProject
                 };
 
                 this.init();
@@ -376,16 +382,17 @@
                     return;
                 }
 
-                // Check for privacy policy parameter
+                // Check for policy parameters
                 const urlParams = new URLSearchParams(window.location.search);
                 const showPrivacyPolicy = urlParams.get('privacypolicy') === 'true';
+                const showTermsOfService = urlParams.get('termsofservice') === 'true';
 
                 const route = this.routes[normalizedPath];
 
                 if (route) {
-                    if (normalizedPath && showPrivacyPolicy) {
-                        // If it's a project and privacy policy is requested, show project with privacy policy open
-                        this.showProject(normalizedPath, showPrivacyPolicy);
+                    if (normalizedPath && (showPrivacyPolicy || showTermsOfService)) {
+                        // If it's a project and policy is requested, show project with the policy open
+                        this.showProject(normalizedPath, showPrivacyPolicy, showTermsOfService);
                     } else {
                         route.call(this, normalizedPath);
                     }
@@ -536,7 +543,7 @@
                 });
             }
 
-            async showProject(projectName, showPrivacyPolicy = false) {
+            async showProject(projectName, showPrivacyPolicy = false, showTermsOfService = false) {
                 try {
                     const basePath = this.getProjectBasePath(projectName);
                     const response = await fetch(`${basePath}/info.json`);
@@ -546,7 +553,7 @@
                     }
 
                     const projectData = await response.json();
-                    this.displayProject(projectData, projectName, showPrivacyPolicy);
+                    this.displayProject(projectData, projectName, showPrivacyPolicy, showTermsOfService);
                     await this.loadProjectImages(projectName, projectData.imageCount || 0);
                 } catch (error) {
                     console.error('Error loading project data:', error);
@@ -554,7 +561,7 @@
                 }
             }
 
-            displayProject(data, projectName, showPrivacyPolicy = false) {
+            displayProject(data, projectName, showPrivacyPolicy = false, showTermsOfService = false) {
                 // Hide header on project pages
                 document.querySelector('.header').style.display = 'none';
 
@@ -589,6 +596,15 @@
                                     </div>
                                 </div>
                             ` : ''}
+
+                            <!-- Terms of Service -->
+                            ${data.termsOfService ? `
+                                <div class="terms-section" style="display: ${showTermsOfService ? 'block' : 'none'};">
+                                    <div class="terms-content" id="terms-content">
+                                        <div class="loading-state">Loading terms of service...</div>
+                                    </div>
+                                </div>
+                            ` : ''}
                         </div>
                     </main>
                 `;
@@ -604,6 +620,11 @@
                 // Load privacy policy if needed
                 if (data.privacyPolicy) {
                     this.loadPrivacyPolicy(projectName, data.privacyPolicy, showPrivacyPolicy);
+                }
+
+                // Load terms of service if needed
+                if (data.termsOfService) {
+                    this.loadTermsOfService(projectName, data.termsOfService, showTermsOfService);
                 }
 
                 // Scroll to top
@@ -627,6 +648,10 @@
 
                 if (data.privacyPolicy) {
                     buttons.push(`<button onclick="togglePrivacyPolicy()" class="action-button outline">Privacy Policy</button>`);
+                }
+
+                if (data.termsOfService) {
+                    buttons.push(`<button onclick="toggleTermsOfService()" class="action-button outline">Terms of Service</button>`);
                 }
 
                 if (buttons.length > 0) {
@@ -1039,6 +1064,34 @@
                     }
                 }
             }
+
+            async loadTermsOfService(projectName, termsOfServicePath, showTermsOfService = false) {
+                try {
+                    const resolvedPath = this.resolveProjectAsset(projectName, termsOfServicePath);
+                    const response = await fetch(resolvedPath);
+                    if (!response.ok) {
+                        throw new Error('Failed to load terms of service');
+                    }
+
+                    const termsText = await response.text();
+                    const termsContent = document.getElementById('terms-content');
+
+                    if (termsContent) {
+                        termsContent.innerHTML = this.convertMarkdownToHtml(termsText);
+                    }
+                } catch (error) {
+                    console.error('Error loading terms of service:', error);
+                    const termsContent = document.getElementById('terms-content');
+                    if (termsContent) {
+                        termsContent.innerHTML = `
+                            <div class="error-state">
+                                <p>Unable to load terms of service at the moment.</p>
+                                <p>Please contact us directly for terms information.</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
         }
 
         // Global gallery functions
@@ -1104,21 +1157,47 @@
         // Global function for privacy policy toggle
         function togglePrivacyPolicy() {
             const privacySection = document.querySelector('.privacy-section');
+            const termsSection = document.querySelector('.terms-section');
             if (privacySection) {
                 const isVisible = privacySection.style.display !== 'none';
                 privacySection.style.display = isVisible ? 'none' : 'block';
 
+                if (!isVisible && termsSection) {
+                    termsSection.style.display = 'none';
+                }
+
                 // Update URL to reflect privacy policy state
                 const currentUrl = new URL(window.location);
                 if (isVisible) {
-                    // Privacy policy is being hidden, remove parameter
                     currentUrl.searchParams.delete('privacypolicy');
                 } else {
-                    // Privacy polis hown, add parameter
                     currentUrl.searchParams.set('privacypolicy', 'true');
+                    currentUrl.searchParams.delete('termsofservice');
                 }
 
-                // Update URL without page reload
+                window.history.pushState({}, '', currentUrl.toString());
+            }
+        }
+
+        function toggleTermsOfService() {
+            const termsSection = document.querySelector('.terms-section');
+            const privacySection = document.querySelector('.privacy-section');
+            if (termsSection) {
+                const isVisible = termsSection.style.display !== 'none';
+                termsSection.style.display = isVisible ? 'none' : 'block';
+
+                if (!isVisible && privacySection) {
+                    privacySection.style.display = 'none';
+                }
+
+                const currentUrl = new URL(window.location);
+                if (isVisible) {
+                    currentUrl.searchParams.delete('termsofservice');
+                } else {
+                    currentUrl.searchParams.set('termsofservice', 'true');
+                    currentUrl.searchParams.delete('privacypolicy');
+                }
+
                 window.history.pushState({}, '', currentUrl.toString());
             }
         }

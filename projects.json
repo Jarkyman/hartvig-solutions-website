@@ -18,5 +18,10 @@
         "name": "util-master",
         "description": "Learn CS2 lineups for smokes, flashes, and molotovs on all Counter-Strike maps. Master the art of utility usage with precise positioning and timing guides to improve your tactical gameplay.",
         "shortDescription": "CS2 utility lineup trainer"
+    },
+    {
+        "name": "pocket-coach",
+        "description": "Pocket Coach is your personal AI trainer in your pocket, delivering tailored guidance, daily exercises, and motivating feedback based on your goals and habits. The app learns what matters to you and helps you take small, realistic steps toward better focus, health, and performance.",
+        "shortDescription": "Personal AI trainer for daily guidance"
     }
 ]
