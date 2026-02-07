@@ -8,12 +8,13 @@ We collect several different types of information for various purposes to provid
 
 ### Types of Data Collected
 
-#### Personal Data
+**Personal Data**
 While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:
+
 - Email address (if provided for support or account)
 - Usage Data
 
-#### Usage Data
+**Usage Data**
 We may also collect information on how the Service is accessed and used ("Usage Data"). This includes information such as your device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.
 
 ## 2. Service Providers
@@ -36,4 +37,5 @@ If you are a resident of the European Economic Area (EEA), you have certain data
 ## 4. Contact Us
 
 If you have any questions about this Privacy Policy, please contact us:
+
 - By email: support@hartvigsolutions.com

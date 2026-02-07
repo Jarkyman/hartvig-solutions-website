@@ -30,4 +30,5 @@ These Terms shall be governed and construed in accordance with the laws of Denma
 ## 6. Contact Us
 
 If you have any questions about these Terms, please contact us:
+
 - By email: support@hartvigsolutions.com
