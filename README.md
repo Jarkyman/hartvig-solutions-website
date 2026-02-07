@@ -9,6 +9,7 @@ A modern, responsive portfolio site for Hartvig Solutions — showcasing apps an
 - **Project pages**: Generated from `/project/<name>/info.json` folders
 - **HTMX**: Lightweight interactivity without heavy frameworks
 - **Privacy policies**: Markdown support per project
+- **Terms of service**: Optional Markdown support per project
 - **Static-host friendly**: Client-side router keeps URLs clean
 
 ## Project Structure
@@ -50,13 +51,15 @@ A modern, responsive portfolio site for Hartvig Solutions — showcasing apps an
   "googlePlay": "https://play.google.com/store/apps/details?id=...",
   "website": "https://example.com",
  "privacyPolicy": "privacy-policy.md",
+ "termsOfService": "terms-of-service.md",
   "imageCount": 3
 }
 ```
 
 3. Drop screenshots into `project/your-project/images/` (use names like `image1.png`, `image2.jpg`).
-4. Register the route in `index.html` inside `this.routes` (search for `URLRouter`), so `/#your-project` works.
-5. (Optional) Show it on the homepage: add an entry to `PROJECTS_DATA` in `index.html` (and the fallback list in `script.js` if you want parity). Skip this if you want the project hidden from the carousel.
+4. (Optional) If you have a terms file, add `"termsOfService": "terms-of-service.md"` to show the Terms button. Omit the key to hide it.
+5. Register the route in `index.html` inside `this.routes` (search for `URLRouter`), so `/#your-project` works.
+6. (Optional) Show it on the homepage: add an entry to `PROJECTS_DATA` in `index.html` (and the fallback list in `script.js` if you want parity). Skip this if you want the project hidden from the carousel.
 
 ## Adding a Personal Tool Page
 
