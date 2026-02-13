@@ -665,6 +665,8 @@
                 const normalized = (markdown || '').replace(/\r\n/g, '\n').trim();
 
                 const inlineConverted = normalized
+                    .replace(/^##### (.*)$/gim, '<h5>$1</h5>')
+                    .replace(/^#### (.*)$/gim, '<h4>$1</h4>')
                     .replace(/^### (.*)$/gim, '<h3>$1</h3>')
                     .replace(/^## (.*)$/gim, '<h2>$1</h2>')
                     .replace(/^# (.*)$/gim, '<h1>$1</h1>')
@@ -677,7 +679,7 @@
 
                 const htmlBlocks = blocks.map(block => {
                     const hasList = /^<li>/m.test(block);
-                    const hasHeading = /^<h[1-3]>/.test(block);
+                    const hasHeading = /^<h[1-5]>/.test(block);
                     let content = block.replace(/\n/g, '<br>');
 
                     if (hasList) {
