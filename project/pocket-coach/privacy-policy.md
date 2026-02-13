@@ -8,13 +8,13 @@ We collect several different types of information for various purposes to provid
 
 ### Types of Data Collected
 
-**Personal Data**
+#### Personal Data
 While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data"). Personally identifiable information may include, but is not limited to:
 
 - Email address (if provided for support or account)
 - Usage Data
 
-**Usage Data**
+#### Usage Data
 We may also collect information on how the Service is accessed and used ("Usage Data"). This includes information such as your device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.
 
 ## 2. Service Providers
@@ -22,7 +22,28 @@ We may also collect information on how the Service is accessed and used ("Usage 
 We may employ third-party companies and individuals to facilitate our Service ("Service Providers"), to provide the Service on our behalf, to perform Service-related services, or to assist us in analyzing how our Service is used.
 
 ### AI Processing (OpenAI)
-Our app uses OpenAI's API to provide AI-powered coaching. The messages you send to the coach are processed by OpenAI. We do not use your personal identity with OpenAI, but the content of your messages is shared to generate responses. Please do not share sensitive personal information in the chat.
+PocketCoach uses third-party AI services (OpenAI) to generate chat responses and coaching advice.
+
+**Data sent to AI provider:**
+
+- The content of your chat messages.
+- The selected coach persona.
+- Any personal context you explicitly provide in the app settings.
+
+**Purpose:**
+
+- To generate relevant and helpful coaching responses.
+- To improve the reliability and quality of the service.
+
+**Sharing:**
+
+- Data is transmitted securely to OpenAI for processing.
+- Data is not used by OpenAI to train their models.
+
+**Retention:**
+
+- Chat history is stored locally on your device and can be deleted at any time via Settings.
+- Data sent to OpenAI is subject to their retention policies (typically 30 days for API usage).
 
 ### Subscriptions (RevenueCat)
 We use RevenueCat to manage in-app subscriptions. RevenueCat collects information about your purchases and subscription status. This data is handled according to their privacy policy.
