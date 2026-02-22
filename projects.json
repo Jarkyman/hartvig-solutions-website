@@ -23,5 +23,10 @@
         "name": "pocket-coach",
         "description": "Pocket Coach is your personal AI trainer in your pocket, delivering tailored guidance, daily exercises, and motivating feedback based on your goals and habits. The app learns what matters to you and helps you take small, realistic steps toward better focus, health, and performance.",
         "shortDescription": "Personal AI trainer for daily guidance"
+    },
+    {
+        "name": "zip-flow",
+        "description": "Connect numbers in order from 1 to the end and fill the grid! 1500+ puzzles.",
+        "shortDescription": "Number-connecting puzzle game"
     }
 ]
