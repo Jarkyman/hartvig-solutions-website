@@ -1,54 +1,176 @@
 <!DOCTYPE html>
-<html lang="da">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Golf Course Mapper</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 </head>
-
 <body>
-    <div class="container">
-        <div class="panel">
-            <form id="golfForm">
-                <div id="fieldsContainer">
-                    <!-- Rækker vil blive genereret af JavaScript -->
-                </div>
-                <button class="custom-button" type="button" id="addRowBtn">Add Row</button>
-                <button class="custom-button" type="button" id="generateCSVBtn">Generate CSV</button>
-                <button class="custom-button" type="button" id="resetRowsBtn">Reset Rows</button>
-                <div>
-                    <button class="custom-button" type="button" id="addGreenBunkerLBtn">Add Green Bunker L</button>
-                    <button class="custom-button" type="button" id="addGreenBunkerRBtn">Add Green Bunker R</button>
-                    <button class="custom-button" type="button" id="addFairwayBunkerLBtn">Add Fairway Bunker L</button>
-                    <button class="custom-button" type="button" id="addFairwayBunkerRBtn">Add Fairway Bunker R</button>
-                    <button class="custom-button" type="button" id="add100mBtn">Add 100m</button>
-                    <button class="custom-button" type="button" id="add150mBtn">Add 150m</button>
-                    <button class="custom-button" type="button" id="add200mBtn">Add 200m</button>
-                    <button class="custom-button" type="button" id="addWaterLBtn">Add Water L</button>
-                    <button class="custom-button" type="button" id="addWaterRBtn">Add Water R</button>
+<div class="container">
 
-                    <button class="custom-button" type="button" id="addDogledBtn">Add Dogled</button>
-                    <button class="custom-button" type="button" id="addRoadLBtn">Add Road L</button>
-                    <button class="custom-button" type="button" id="addRoadCBtn">Add Road C</button>
-                    <button class="custom-button" type="button" id="addRoadRBtn">Add Road R</button>
-                </div>
+    <!-- ── LEFT PANEL ── -->
+    <div class="panel">
 
-            </form>
+        <!-- STICKY HEADER -->
+        <div class="panel-header">
+            <div class="app-brand">
+                <span class="app-icon">⛳</span>
+                <span class="app-title">Course Mapper</span>
+            </div>
+
+            <div class="course-selectors">
+                <div class="select-group">
+                    <label for="clubSelect">Club</label>
+                    <div class="select-with-btn">
+                        <select id="clubSelect"><option value="">Loading…</option></select>
+                        <button id="locateClubBtn" class="locate-club-btn" title="Center map on selected club">📍</button>
+                    </div>
+                </div>
+                <div class="select-group">
+                    <label for="courseSelect">Course</label>
+                    <select id="courseSelect" disabled><option value="">Select club first</option></select>
+                </div>
+            </div>
+
+            <div class="hole-nav">
+                <button id="prevHoleBtn" class="hole-nav-btn" title="Previous Hole">‹</button>
+                <div class="hole-display">
+                    <span class="hole-label">HOLE</span>
+                    <input type="number" id="holeInput" min="1" max="18" value="1">
+                    <span id="holeTotalDisplay" class="hole-total">/ 18</span>
+                </div>
+                <button id="nextHoleBtn" class="hole-nav-btn" title="Next Hole">›</button>
+            </div>
+
+            <div class="course-meta">
+                <span class="meta-badge">ID: <span id="courseIdDisplay">—</span></span>
+                <span class="meta-badge meta-badge--accent"><span id="totalFeaturesCount">0</span> features</span>
+                <button class="reset-all-btn" id="resetAllBtn" title="Clear everything and start fresh">🗑 Reset</button>
+            </div>
         </div>
-        <div id="map"></div>
+
+        <!-- SCROLLABLE BODY -->
+        <div class="panel-body">
+
+            <!-- ═══ HOLE FEATURES SECTION ═══ -->
+            <div class="section-header"><span>Hole Features</span></div>
+            <div class="quick-add-grid">
+                <button class="quick-btn" data-action="addGreenBunkerL"   data-color="green">Bkr L</button>
+                <button class="quick-btn" data-action="addGreenBunkerC"   data-color="green">Bkr C</button>
+                <button class="quick-btn" data-action="addGreenBunkerR"   data-color="green">Bkr R</button>
+                <button class="quick-btn" data-action="addFairwayBunkerL" data-color="yellow">FW Bkr L</button>
+                <button class="quick-btn" data-action="addFairwayBunkerC" data-color="yellow">FW Bkr C</button>
+                <button class="quick-btn" data-action="addFairwayBunkerR" data-color="yellow">FW Bkr R</button>
+                <button class="quick-btn" data-action="add100m"           data-color="red">100m</button>
+                <button class="quick-btn" data-action="add150m"           data-color="red">150m</button>
+                <button class="quick-btn" data-action="add200m"           data-color="red">200m</button>
+                <button class="quick-btn" style="grid-column: span 3;" data-action="addTee" data-color="orange">Tee Box</button>
+                <button class="quick-btn" style="grid-column: span 3;" data-action="addDogled" data-color="purple">Dogleg</button>
+            </div>
+            <div class="section-header">
+                <span>Points of Interest</span>
+            </div>
+            <div id="holeFieldsContainer"></div>
+
+            <!-- divider -->
+            <div class="scope-divider">
+                <span class="scope-divider-line"></span>
+                <span class="scope-divider-text">COURSE-WIDE</span>
+                <span class="scope-divider-line"></span>
+            </div>
+
+            <!-- ═══ COURSE FEATURES SECTION ═══ -->
+            <div class="section-header"><span>Shared Features</span></div>
+            <div class="quick-add-grid">
+                <button class="quick-btn" data-action="addWaterL"        data-color="blue">Water L</button>
+                <button class="quick-btn" data-action="addWaterC"        data-color="blue">Water C</button>
+                <button class="quick-btn" data-action="addWaterR"        data-color="blue">Water R</button>
+                <button class="quick-btn" data-action="addRoadL"         data-color="gray">Road L</button>
+                <button class="quick-btn" data-action="addRoadC"         data-color="gray">Road C</button>
+                <button class="quick-btn" data-action="addRoadR"         data-color="gray">Road R</button>
+                <button class="quick-btn" data-action="addOOB"           data-color="white">OOB</button>
+                <button class="quick-btn" data-action="addPenaltyYellow" data-color="yellow">Penalty Y</button>
+                <button class="quick-btn" data-action="addPenaltyRed"    data-color="red">Penalty R</button>
+                <button class="quick-btn" style="grid-column: span 3;" data-action="addTrees" data-color="green">Trees</button>
+            </div>
+            <div class="section-header">
+                <span>Course Features</span>
+            </div>
+            <div id="courseFieldsContainer"></div>
+
+            <!-- Actions -->
+            <div class="action-bar">
+                <button class="action-btn action-btn--primary" id="generateJSONBtn">📋 Generate JSON</button>
+                <button class="action-btn action-btn--next"    id="resetRowsBtn">Next Hole →</button>
+            </div>
+
+        </div>
     </div>
 
-    <div id="popup" class="popup">
-        <textarea id="csvOutput" readonly></textarea>
-        <button id="copyBtn">Copy to Clipboard</button>
-        <button id="closePopupBtn">Close</button>
-    </div>
+    <!-- MAP -->
+    <div id="map"></div>
+</div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="scripts.js"></script>
+<!-- DRAWING BANNER -->
+<div id="drawingBanner" class="drawing-banner hidden">
+    <div class="drawing-info">
+        <span class="drawing-pulse"></span>
+        <span id="drawingInfoText">Click map to add points.</span>
+        <span id="drawingPointCount" class="draw-count">0 pts</span>
+    </div>
+    <div class="draw-mode-toggle">
+        <button id="modeClickBtn"    class="mode-btn mode-btn--active">🖱 Click</button>
+        <button id="modeFreehandBtn" class="mode-btn">✏ Freehand</button>
+    </div>
+    <div class="drawing-actions">
+        <button id="undoDrawBtn">↩ Undo</button>
+        <button id="clearDrawBtn">⟳ Clear</button>
+        <button id="finishDrawBtn">✓ Finish</button>
+        <button id="cancelDrawBtn">✕ Cancel</button>
+    </div>
+</div>
+
+<!-- JSON POPUP -->
+<div id="popup" class="popup">
+    <div class="popup-header">
+        <div>
+            <h3>GeoJSON Output</h3>
+            <span id="popupFeatureCount" class="popup-count">0 features</span>
+        </div>
+        <button id="closePopupBtn" class="popup-close">✕</button>
+    </div>
+    <textarea id="jsonOutput" readonly></textarea>
+    <div class="popup-actions">
+        <button id="copyBtn">📋 Copy</button>
+        <button id="downloadBtn">⬇ Download</button>
+        <button id="clearAllFeaturesBtn" class="btn-danger">🗑 Clear All</button>
+    </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div id="confirmModal" class="confirm-overlay hidden">
+    <div class="confirm-box">
+        <div class="confirm-icon">⚠️</div>
+        <h3 class="confirm-title">Reset Everything?</h3>
+        <p class="confirm-text">All mapped data, all holes, all courses will be permanently deleted.</p>
+        <div class="confirm-actions">
+            <button id="confirmCancelBtn" class="confirm-btn confirm-btn--cancel">Cancel</button>
+            <button id="confirmOkBtn" class="confirm-btn confirm-btn--danger">🗑 Yes, Reset All</button>
+        </div>
+    </div>
+</div>
+
+<!-- DROP OVERLAY -->
+<div id="dropOverlay" class="drop-overlay hidden">
+    <div class="drop-box">
+        <div class="drop-icon">📂</div>
+        <div class="drop-text">Drop .geojson file to import</div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="scripts.js"></script>
 </body>
-
 </html>
